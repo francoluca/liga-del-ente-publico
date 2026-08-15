@@ -1,50 +1,26 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { type CharacterType } from '@/lib/data/characters';
 
-interface MatchRecord {
+interface LeaderEntry {
   id: number;
-  character_id: number;
-  character_name: string;
-  result: 'win' | 'draw' | 'loss';
-  kills: number | null;
-  hooks: number | null;
-  escapes: number | null;
-  generators: number | null;
-  match_pl: number;
-  division: string;
-  played_at: number;
+  name: string;
+  image: string;
+  value: number;
 }
 
 interface RecordsData {
-  totalPrimaryLeader: { id: number; name: string; image: string; value: number } | null;
-  totalSecondaryLeader: { id: number; name: string; image: string; value: number } | null;
+  totalPrimaryLeaders: LeaderEntry[];
+  totalSecondaryLeaders: LeaderEntry[];
   longestWinStreakEver: { characterId: number; characterName: string; image: string | null; streak: number } | null;
   longestLossStreakEver: { characterId: number; characterName: string; image: string | null; streak: number } | null;
   currentStreaks: { characterId: number; characterName: string; image: string | null; streak: number; streakType: 'win' | 'loss' }[];
   careerLeaders: { id: number; name: string; image: string; career_pl: number }[];
   championLeaders: { id: number; name: string; image: string; champion: number }[];
   totalMatchesLogged: number;
-}
-
-interface CharacterOption {
-  id: number;
-  name: string;
-  image: string;
-}
-
-const resultLabel: Record<string, string> = { win: 'Victoria', draw: 'Empate', loss: 'Derrota' };
-const resultColor: Record<string, string> = {
-  win: 'text-green-400',
-  draw: 'text-yellow-400',
-  loss: 'text-red-400',
-};
-
-function formatDate(ts: number): string {
-  return new Date(ts).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 function Card({ title, children, className = '' }: { title: string; children: React.ReactNode; className?: string }) {
@@ -120,52 +96,36 @@ function StreakSpotlight({
   );
 }
 
+function TotalLeadersCard({ title, leaders }: { title: string; leaders: LeaderEntry[] }) {
+  return (
+    <Card title={title}>
+      {leaders.length > 0 ? (
+        <div>
+          <div className="text-2xl font-bold text-amber-400 mb-3">{leaders[0].value}</div>
+          <div className="flex flex-col gap-2.5">
+            {leaders.map((c) => (
+              <div key={c.id} className="flex items-center gap-3">
+                <Avatar image={c.image} alt={c.name} size={36} />
+                <span className="text-sm text-zinc-300">{c.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : <div className="text-zinc-600 italic text-sm">Sin datos todavía</div>}
+    </Card>
+  );
+}
+
 export default function HistorialPage() {
   const [type, setType] = useState<CharacterType>('killer');
   const [records, setRecords] = useState<RecordsData | null>(null);
-  const [characters, setCharacters] = useState<CharacterOption[]>([]);
-  const [selectedCharacterId, setSelectedCharacterId] = useState<number | null>(null);
-  const [matches, setMatches] = useState<MatchRecord[]>([]);
-  const [loadingMatches, setLoadingMatches] = useState(false);
 
   useEffect(() => {
-    setSelectedCharacterId(null);
-    setMatches([]);
     fetch(`/api/records?type=${type}`).then((r) => r.json()).then(setRecords).catch(console.error);
-    fetch(`/api/characters?type=${type}`)
-      .then((r) => r.json())
-      .then((data: { id: number; name: string; image: string }[]) => {
-        const sorted = [...data].sort((a, b) => a.name.localeCompare(b.name, 'es'));
-        setCharacters(sorted);
-      })
-      .catch(console.error);
   }, [type]);
-
-  useEffect(() => {
-    if (!selectedCharacterId) {
-      setMatches([]);
-      return;
-    }
-    setLoadingMatches(true);
-    fetch(`/api/matches?type=${type}&characterId=${selectedCharacterId}&limit=50`)
-      .then((r) => r.json())
-      .then((data) => setMatches(data.matches || []))
-      .catch(console.error)
-      .finally(() => setLoadingMatches(false));
-  }, [selectedCharacterId, type]);
 
   const primaryLabel = type === 'killer' ? 'Kills' : 'Escapes';
   const secondaryLabel = type === 'killer' ? 'Cuelgues' : 'Generadores';
-
-  const selectedCharacterStreak = useMemo(() => {
-    if (!records || !selectedCharacterId) return null;
-    return records.currentStreaks.find((s) => s.characterId === selectedCharacterId) ?? null;
-  }, [records, selectedCharacterId]);
-
-  const selectedCharacter = useMemo(
-    () => characters.find((c) => c.id === selectedCharacterId) ?? null,
-    [characters, selectedCharacterId]
-  );
 
   return (
     <main className="h-screen overflow-y-auto bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-7xl mx-auto">
@@ -221,29 +181,8 @@ export default function HistorialPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-            <Card title={`Más ${primaryLabel.toLowerCase()} en total`}>
-              {records.totalPrimaryLeader ? (
-                <div className="flex items-center gap-4">
-                  <Avatar image={records.totalPrimaryLeader.image} alt={records.totalPrimaryLeader.name} size={56} />
-                  <div>
-                    <div className="text-2xl font-bold text-amber-400">{records.totalPrimaryLeader.value}</div>
-                    <div className="text-sm text-zinc-300">{records.totalPrimaryLeader.name}</div>
-                  </div>
-                </div>
-              ) : <div className="text-zinc-600 italic text-sm">Sin datos todavía</div>}
-            </Card>
-
-            <Card title={`Más ${secondaryLabel.toLowerCase()} en total`}>
-              {records.totalSecondaryLeader ? (
-                <div className="flex items-center gap-4">
-                  <Avatar image={records.totalSecondaryLeader.image} alt={records.totalSecondaryLeader.name} size={56} />
-                  <div>
-                    <div className="text-2xl font-bold text-amber-400">{records.totalSecondaryLeader.value}</div>
-                    <div className="text-sm text-zinc-300">{records.totalSecondaryLeader.name}</div>
-                  </div>
-                </div>
-              ) : <div className="text-zinc-600 italic text-sm">Sin datos todavía</div>}
-            </Card>
+            <TotalLeadersCard title={`Más ${primaryLabel.toLowerCase()} en total`} leaders={records.totalPrimaryLeaders} />
+            <TotalLeadersCard title={`Más ${secondaryLabel.toLowerCase()} en total`} leaders={records.totalSecondaryLeaders} />
 
             <Card title="Líderes de PL de carrera">
               {records.careerLeaders.length > 0 ? (
@@ -296,70 +235,6 @@ export default function HistorialPage() {
           )}
         </>
       )}
-
-      <div className="border-t border-zinc-800 pt-8">
-        <div className="text-zinc-400 text-xs uppercase tracking-wider font-bold mb-3">Buscar historial de un personaje</div>
-        <select
-          value={selectedCharacterId ?? ''}
-          onChange={(e) => setSelectedCharacterId(e.target.value ? parseInt(e.target.value) : null)}
-          className="w-full max-w-md bg-zinc-900 border border-zinc-700 rounded px-3 py-2 text-white mb-4"
-        >
-          <option value="">— Seleccioná un personaje —</option>
-          {characters.map((c) => (
-            <option key={c.id} value={c.id}>{c.name}</option>
-          ))}
-        </select>
-
-        {selectedCharacter && (
-          <div className="flex items-center gap-4 mb-4">
-            <Avatar image={selectedCharacter.image} alt={selectedCharacter.name} size={72} />
-            <div className="text-2xl font-bold text-white">{selectedCharacter.name}</div>
-          </div>
-        )}
-
-        {selectedCharacterStreak && (
-          <div className="mb-4 text-sm text-zinc-300">
-            Racha actual: <span className={selectedCharacterStreak.streakType === 'win' ? 'text-green-400 font-semibold' : 'text-red-400 font-semibold'}>
-              {selectedCharacterStreak.streak} {selectedCharacterStreak.streakType === 'win' ? 'victorias' : 'derrotas'} seguidas
-            </span>
-          </div>
-        )}
-
-        {loadingMatches && <div className="text-zinc-500 text-sm">Cargando...</div>}
-
-        {!loadingMatches && selectedCharacterId && matches.length === 0 && (
-          <div className="text-zinc-600 italic text-sm">Este personaje todavía no tiene partidas registradas en el historial.</div>
-        )}
-
-        {matches.length > 0 && (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-zinc-500 text-xs uppercase tracking-wider border-b border-zinc-800">
-                  <th className="text-left py-2 pr-4">Fecha</th>
-                  <th className="text-left py-2 pr-4">Resultado</th>
-                  <th className="text-left py-2 pr-4">{primaryLabel}</th>
-                  <th className="text-left py-2 pr-4">{secondaryLabel}</th>
-                  <th className="text-left py-2 pr-4">PL</th>
-                  <th className="text-left py-2 pr-4">División</th>
-                </tr>
-              </thead>
-              <tbody>
-                {matches.map((m) => (
-                  <tr key={m.id} className="border-b border-zinc-900">
-                    <td className="py-2.5 pr-4 text-zinc-400">{formatDate(m.played_at)}</td>
-                    <td className={`py-2.5 pr-4 font-semibold ${resultColor[m.result]}`}>{resultLabel[m.result]}</td>
-                    <td className="py-2.5 pr-4 text-zinc-300">{type === 'killer' ? m.kills : m.escapes}</td>
-                    <td className="py-2.5 pr-4 text-zinc-300">{type === 'killer' ? m.hooks : m.generators}</td>
-                    <td className="py-2.5 pr-4 text-amber-400 font-semibold">{m.match_pl}</td>
-                    <td className="py-2.5 pr-4 text-zinc-500">{m.division}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
     </main>
   );
 }

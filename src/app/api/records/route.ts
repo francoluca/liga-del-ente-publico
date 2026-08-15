@@ -95,13 +95,13 @@ export async function GET(request: NextRequest) {
     const primaryColumn = type === 'killer' ? 'kills' : 'escapes';
     const secondaryColumn = type === 'killer' ? 'hooks' : 'generators';
 
-    const [primaryLeaderRows, secondaryLeaderRows, careerLeaders, championLeaders] = await Promise.all([
+    const [primaryRows, secondaryRows, careerLeaders, championLeaders] = await Promise.all([
       query<{ id: number; name: string; image: string; value: number }>(
-        `SELECT id, name, image, ${primaryColumn} as value FROM characters WHERE type = ? AND ${primaryColumn} > 0 ORDER BY ${primaryColumn} DESC LIMIT 1`,
+        `SELECT id, name, image, ${primaryColumn} as value FROM characters WHERE type = ? AND ${primaryColumn} > 0 ORDER BY ${primaryColumn} DESC`,
         [type]
       ),
       query<{ id: number; name: string; image: string; value: number }>(
-        `SELECT id, name, image, ${secondaryColumn} as value FROM characters WHERE type = ? AND ${secondaryColumn} > 0 ORDER BY ${secondaryColumn} DESC LIMIT 1`,
+        `SELECT id, name, image, ${secondaryColumn} as value FROM characters WHERE type = ? AND ${secondaryColumn} > 0 ORDER BY ${secondaryColumn} DESC`,
         [type]
       ),
       query<{ id: number; name: string; image: string; career_pl: number }>(
@@ -114,9 +114,15 @@ export async function GET(request: NextRequest) {
       ),
     ]);
 
+    // Ties: show everyone at the top value, not just whoever sorted first.
+    const primaryMax = primaryRows[0]?.value;
+    const totalPrimaryLeaders = primaryMax !== undefined ? primaryRows.filter((r) => r.value === primaryMax) : [];
+    const secondaryMax = secondaryRows[0]?.value;
+    const totalSecondaryLeaders = secondaryMax !== undefined ? secondaryRows.filter((r) => r.value === secondaryMax) : [];
+
     return NextResponse.json({
-      totalPrimaryLeader: primaryLeaderRows[0] ?? null,
-      totalSecondaryLeader: secondaryLeaderRows[0] ?? null,
+      totalPrimaryLeaders,
+      totalSecondaryLeaders,
       longestWinStreakEver,
       longestLossStreakEver,
       currentStreaks: currentStreaks.slice(0, 5),
