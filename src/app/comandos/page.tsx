@@ -64,19 +64,9 @@ export default function ComandosPage() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-5xl mx-auto">
-      <div className="flex items-start justify-between gap-4 mb-1">
-        <div>
-          <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Comandos del chat</h1>
-          <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
-        </div>
-        <div className="flex flex-col items-end gap-1 mt-2 text-sm">
-          <Link href="/posiciones" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Tabla de posiciones →
-          </Link>
-          <Link href="/historial" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Historial y récords →
-          </Link>
-        </div>
+      <div className="mb-1">
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Comandos del chat</h1>
+        <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 
       <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 my-8">
@@ -88,10 +78,19 @@ export default function ComandosPage() {
           <code className="text-amber-400 font-semibold">!perk &lt;nombre de la perk&gt;</code>
           <span className="text-zinc-400"> — vota una perk (incluye &quot;vacio&quot;)</span>
         </div>
+        <div>
+          <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+          <span className="text-zinc-400"> — apostá puntos al resultado de la ronda actual</span>
+        </div>
         <div className="text-zinc-500 text-xs mt-2">
           Ejemplo: <code className="text-amber-400">!favorito jason</code> · funciona con el nombre completo o
           solo una parte (ej. &quot;payaso&quot; en vez de &quot;el payaso&quot;). Hacé click en cualquier nombre
           de la lista para copiar el comando listo para pegar en el chat.
+        </div>
+        <div className="text-zinc-500 text-xs mt-1">
+          Ejemplo de predicción: <code className="text-amber-400">!prediccion killer win 100</code> — tenés 5
+          minutos desde que sale el personaje para predecir. Mirá tu balance y aciertos en{' '}
+          <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Chatters y predicciones</Link>.
         </div>
       </div>
 

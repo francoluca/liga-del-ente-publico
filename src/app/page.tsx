@@ -19,16 +19,22 @@ const links = [
     description: 'Todos los nombres exactos para votar con !favorito y !perk.',
     color: 'border-red-700/50 hover:border-red-500',
   },
+  {
+    href: '/viewers',
+    title: 'Chatters y predicciones',
+    description: 'Ranking de puntos, aciertos y ganancias de quienes predicen en el chat.',
+    color: 'border-blue-700/50 hover:border-blue-500',
+  },
 ];
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-6">
-      <div className="max-w-3xl w-full">
+      <div className="max-w-4xl w-full">
         <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-2">Liga Del Ente</h1>
         <p className="text-zinc-400 text-center mb-10">Todo lo que el espectador puede consultar, en un solo lugar.</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {links.map((l) => (
             <Link
               key={l.href}

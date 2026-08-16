@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { type CharacterType } from '@/lib/data/characters';
 
 interface LeaderEntry {
@@ -128,20 +127,10 @@ export default function HistorialPage() {
   const secondaryLabel = type === 'killer' ? 'Cuelgues' : 'Generadores';
 
   return (
-    <main className="h-screen overflow-y-auto bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-7xl mx-auto">
-      <div className="flex items-start justify-between gap-4 mb-1">
-        <div>
-          <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Historial y récords</h1>
-          <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
-        </div>
-        <div className="flex flex-col items-end gap-1 mt-2 text-sm">
-          <Link href="/posiciones" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Tabla de posiciones →
-          </Link>
-          <Link href="/comandos" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Comandos del chat →
-          </Link>
-        </div>
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-7xl mx-auto">
+      <div className="mb-1">
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Historial y récords</h1>
+        <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 
       <div className="flex gap-2 my-8">

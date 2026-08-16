@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { DIVISION_ORDER, SEASON_DISTRIBUTIONS, type Division, type CharacterType } from '@/lib/data/characters';
 
 interface Character {
@@ -85,20 +84,10 @@ export default function PosicionesPage() {
   }, {} as Record<Division, Character[]>);
 
   return (
-    <main className="h-screen overflow-y-auto bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-6xl mx-auto">
-      <div className="flex items-start justify-between gap-4 mb-1">
-        <div>
-          <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Tabla de posiciones</h1>
-          <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
-        </div>
-        <div className="flex flex-col items-end gap-1 mt-2 text-sm">
-          <Link href="/historial" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Historial y récords →
-          </Link>
-          <Link href="/comandos" className="text-amber-400 hover:text-amber-300 underline whitespace-nowrap">
-            Comandos del chat →
-          </Link>
-        </div>
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-6xl mx-auto">
+      <div className="mb-1">
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Tabla de posiciones</h1>
+        <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 
       <div className="flex gap-2 my-8">
@@ -142,8 +131,8 @@ export default function PosicionesPage() {
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: 'rgba(212, 175, 55, 0.5)' }} /> Playoff</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: 'rgba(22, 163, 74, 0.5)' }} /> Zona de ascenso</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm inline-block" style={{ backgroundColor: 'rgba(220, 38, 38, 0.5)' }} /> Zona de descenso</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block bg-green-400" /> Jugó esta ronda</span>
-        <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block bg-zinc-600" /> Pendiente esta ronda</span>
+        <span className="hidden sm:flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block bg-green-400" /> Jugó esta ronda</span>
+        <span className="hidden sm:flex items-center gap-1.5"><span className="w-2 h-2 rounded-full inline-block bg-zinc-600" /> Pendiente esta ronda</span>
       </div>
 
       {loading && <div className="text-zinc-500">Cargando...</div>}
@@ -165,18 +154,18 @@ export default function PosicionesPage() {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] table-fixed text-sm border-separate border-spacing-y-1.5">
+              <table className="w-full sm:min-w-[640px] table-fixed text-sm border-separate border-spacing-y-1.5">
                 <thead>
                   <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="text-left px-3 py-1 w-10">#</th>
+                    <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                     <th className="text-left px-3 py-1">Personaje</th>
-                    <th className="text-center px-2 py-1 w-16">Ronda</th>
-                    <th className="text-center px-2 py-1 w-14">S1</th>
-                    <th className="text-center px-2 py-1 w-14">S2</th>
-                    <th className="text-center px-2 py-1 w-14">S3</th>
-                    <th className="text-center px-2 py-1 w-14">S4</th>
-                    <th className="text-center px-2 py-1 w-14">S5</th>
-                    <th className="text-center px-3 py-1 w-20">PL</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-16">Ronda</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S1</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S2</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S3</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S4</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S5</th>
+                    <th className="text-center px-3 py-1 w-16 sm:w-20">PL</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,7 +199,7 @@ export default function PosicionesPage() {
                             </div>
                           </div>
                         </td>
-                        <td className="text-center px-2 py-2">
+                        <td className="hidden sm:table-cell text-center px-2 py-2">
                           <span
                             className={`inline-block w-2.5 h-2.5 rounded-full ${
                               char.last_round_played !== null ? 'bg-green-400' : 'bg-zinc-600'
@@ -219,7 +208,7 @@ export default function PosicionesPage() {
                           />
                         </td>
                         {[char.pl_t1, char.pl_t2, char.pl_t3, char.pl_t4, char.pl_t5].map((val, i) => (
-                          <td key={i} className="text-center px-2 py-2 text-zinc-400 font-mono">{val != null ? val : '—'}</td>
+                          <td key={i} className="hidden sm:table-cell text-center px-2 py-2 text-zinc-400 font-mono">{val != null ? val : '—'}</td>
                         ))}
                         <td className="text-center px-3 py-2 font-black text-yellow-300 rounded-r-lg">{char.leaguePoints.toFixed(2)}</td>
                       </tr>
