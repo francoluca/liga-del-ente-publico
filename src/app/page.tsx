@@ -21,7 +21,7 @@ const links = [
   },
   {
     href: '/viewers',
-    title: 'Viewers y predicciones',
+    title: 'Ranking del chat',
     description: 'Ranking de puntos, aciertos y ganancias de quienes predicen en el chat.',
     color: 'border-blue-700/50 hover:border-blue-500',
   },

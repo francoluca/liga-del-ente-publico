@@ -129,7 +129,7 @@ export default function ViewersPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-6xl mx-auto">
       <div className="mb-1">
-        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Viewers y predicciones</h1>
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Ranking del chat</h1>
         <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 

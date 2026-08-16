@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const links = [
   { href: '/posiciones', label: 'Posiciones' },
   { href: '/historial', label: 'Historial' },
   { href: '/comandos', label: 'Comandos' },
-  { href: '/viewers', label: 'Viewers' },
+  { href: '/viewers', label: 'Ranking del Chat' },
 ];
 
 export default function Nav() {
@@ -20,10 +21,10 @@ export default function Nav() {
       <nav className="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
         <Link
           href="/"
-          className="font-bold uppercase tracking-wide text-white hover:text-amber-400 transition-colors"
+          className="flex items-center hover:opacity-80 transition-opacity"
           onClick={() => setOpen(false)}
         >
-          Liga Del Ente
+          <Image src="/img/logo_liga_ente.png" alt="Liga Del Ente" width={160} height={48} unoptimized className="h-10 w-auto object-contain" />
         </Link>
 
         <div className="hidden sm:flex items-center gap-1">
