@@ -67,9 +67,9 @@ function HighlightCard({
   title: string;
   leaders: { displayName: string; platform: string | null }[];
   valueLabel: string;
-  tone: 'amber' | 'green';
+  tone: 'amber' | 'green' | 'red';
 }) {
-  const toneClass = tone === 'amber' ? 'text-amber-400' : 'text-green-400';
+  const toneClass = tone === 'amber' ? 'text-amber-400' : tone === 'green' ? 'text-green-400' : 'text-red-400';
   return (
     <Card title={title}>
       {leaders.length > 0 ? (
@@ -91,9 +91,22 @@ function HighlightCard({
   );
 }
 
-type Tab = 'predicciones' | 'duelos' | 'robos' | 'bombas';
+/** All entries tied for the max of `selector`, among those passing `active`. */
+function topLeaders(list: ViewerStat[], active: (v: ViewerStat) => boolean, selector: (v: ViewerStat) => number): ViewerStat[] {
+  const pool = list.filter(active);
+  if (pool.length === 0) return [];
+  const max = Math.max(...pool.map(selector));
+  return pool.filter((v) => selector(v) === max);
+}
+
+function bombNet(v: ViewerStat): number {
+  return v.pointsGainedFromBombs - v.pointsLostToBombs;
+}
+
+type Tab = 'general' | 'predicciones' | 'duelos' | 'robos' | 'bombas';
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: 'general', label: 'General' },
   { key: 'predicciones', label: 'Predicciones' },
   { key: 'duelos', label: 'Duelos' },
   { key: 'robos', label: 'Robos' },
@@ -103,7 +116,7 @@ const TABS: { key: Tab; label: string }[] = [
 export default function ViewersPage() {
   const [data, setData] = useState<ViewerStatsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<Tab>('predicciones');
+  const [tab, setTab] = useState<Tab>('general');
 
   useEffect(() => {
     fetch('/api/viewer-stats')
@@ -124,36 +137,7 @@ export default function ViewersPage() {
 
       {data && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 my-8">
-            <HighlightCard
-              title="Mayor patrimonio"
-              leaders={data.highlights.topBalance ? [data.highlights.topBalance] : []}
-              valueLabel={data.highlights.topBalance ? `${data.highlights.topBalance.netWorth} pts` : '—'}
-              tone="amber"
-            />
-            <HighlightCard
-              title={`Mejor % de aciertos (min ${data.highlights.bestWinRate.minQualifying} predicciones)`}
-              leaders={data.highlights.bestWinRate.leaders}
-              valueLabel={
-                data.highlights.bestWinRate.leaders.length > 0
-                  ? `${(data.highlights.bestWinRate.leaders[0].winRate! * 100).toFixed(0)}%`
-                  : '—'
-              }
-              tone="green"
-            />
-            <HighlightCard
-              title="Pago más grande de la historia"
-              leaders={data.highlights.biggestSinglePayout.leaders}
-              valueLabel={
-                data.highlights.biggestSinglePayout.value > 0
-                  ? `${data.highlights.biggestSinglePayout.value} pts`
-                  : '—'
-              }
-              tone="amber"
-            />
-          </div>
-
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="flex flex-wrap gap-2 my-8">
             {TABS.map((t) => (
               <button
                 key={t.key}
@@ -171,19 +155,16 @@ export default function ViewersPage() {
             <div className="text-zinc-600 italic text-sm mb-4">Todavía nadie participó del chat.</div>
           )}
 
-          {tab === 'predicciones' && (
+          {tab === 'general' && (
             <div className="overflow-x-auto">
-              <table className="w-full sm:min-w-[820px] table-fixed text-sm border-separate border-spacing-y-1.5">
+              <table className="w-full sm:min-w-[520px] table-fixed text-sm border-separate border-spacing-y-1.5">
                 <thead>
                   <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                     <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                     <th className="text-left px-3 py-1">Viewer</th>
-                    <th className="text-center px-2 py-1 w-20 sm:w-24">Patrimonio</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Predicciones</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-20">G/P/E</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-20">% Aciertos</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Apostado</th>
-                    <th className="text-center px-3 py-1 w-20 sm:w-24">Ganancia neta</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Balance</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Reservado</th>
+                    <th className="text-center px-3 py-1 w-24">Patrimonio</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -196,20 +177,9 @@ export default function ViewersPage() {
                           <PlatformBadge platform={v.platform} />
                         </div>
                       </td>
-                      <td className="text-center px-2 py-2 font-mono text-yellow-300 font-black">{v.netWorth}</td>
-                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.resolvedCount}</td>
-                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.wins}/{v.losses}/{v.pushes}</td>
-                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">
-                        {v.winRate != null ? `${(v.winRate * 100).toFixed(0)}%` : '—'}
-                      </td>
-                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.totalStaked}</td>
-                      <td
-                        className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
-                          v.netProfit > 0 ? 'text-green-400' : v.netProfit < 0 ? 'text-red-400' : 'text-zinc-400'
-                        }`}
-                      >
-                        {v.netProfit > 0 ? '+' : ''}{v.netProfit}
-                      </td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.balance}</td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.reserved}</td>
+                      <td className="text-center px-3 py-2 font-mono text-yellow-300 font-black rounded-r-lg">{v.netWorth}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -217,103 +187,269 @@ export default function ViewersPage() {
             </div>
           )}
 
+          {tab === 'predicciones' && (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+                <HighlightCard
+                  title={`Mejor % de aciertos (min ${data.highlights.bestWinRate.minQualifying} predicciones)`}
+                  leaders={data.highlights.bestWinRate.leaders}
+                  valueLabel={
+                    data.highlights.bestWinRate.leaders.length > 0
+                      ? `${(data.highlights.bestWinRate.leaders[0].winRate! * 100).toFixed(0)}%`
+                      : '—'
+                  }
+                  tone="green"
+                />
+                <HighlightCard
+                  title="Pago más grande de la historia"
+                  leaders={data.highlights.biggestSinglePayout.leaders}
+                  valueLabel={
+                    data.highlights.biggestSinglePayout.value > 0
+                      ? `${data.highlights.biggestSinglePayout.value} pts`
+                      : '—'
+                  }
+                  tone="amber"
+                />
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.resolvedCount > 0, (v) => v.netProfit);
+                  return (
+                    <HighlightCard
+                      title="Mayor ganancia neta en predicciones"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].netProfit > 0 ? '+' : ''}${leaders[0].netProfit} pts` : '—'}
+                      tone={leaders.length > 0 && leaders[0].netProfit < 0 ? 'red' : 'amber'}
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full sm:min-w-[860px] table-fixed text-sm border-separate border-spacing-y-1.5">
+                  <thead>
+                    <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                      <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
+                      <th className="text-left px-3 py-1">Viewer</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Predicciones</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">G/P/E</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">% Aciertos</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Apostado</th>
+                      <th className="text-center px-3 py-1 w-20 sm:w-24">Ganancia neta</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...data.leaderboard]
+                      .sort((a, b) => b.netProfit - a.netProfit)
+                      .map((v, i) => (
+                        <tr key={v.voterKey} className="bg-zinc-900/50">
+                          <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
+                          <td className="px-3 py-2 overflow-hidden">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
+                              <PlatformBadge platform={v.platform} />
+                            </div>
+                          </td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.resolvedCount}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.wins}/{v.losses}/{v.pushes}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">
+                            {v.winRate != null ? `${(v.winRate * 100).toFixed(0)}%` : '—'}
+                          </td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.totalStaked}</td>
+                          <td
+                            className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
+                              v.netProfit > 0 ? 'text-green-400' : v.netProfit < 0 ? 'text-red-400' : 'text-zinc-400'
+                            }`}
+                          >
+                            {v.netProfit > 0 ? '+' : ''}{v.netProfit}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+
           {tab === 'duelos' && (
-            <div className="overflow-x-auto">
-              <table className="w-full sm:min-w-[520px] table-fixed text-sm border-separate border-spacing-y-1.5">
-                <thead>
-                  <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="text-left px-3 py-1">Viewer</th>
-                    <th className="text-center px-2 py-1 w-24">Ganados</th>
-                    <th className="text-center px-2 py-1 w-24">Perdidos</th>
-                    <th className="text-center px-3 py-1 w-24">Neto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...data.leaderboard]
-                    .sort((a, b) => b.duelsNet - a.duelsNet)
-                    .map((v) => (
-                      <tr key={v.voterKey} className="bg-zinc-900/50">
-                        <td className="px-3 py-2 overflow-hidden rounded-l-lg">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                            <PlatformBadge platform={v.platform} />
-                          </div>
-                        </td>
-                        <td className="text-center px-2 py-2 font-mono text-green-400">{v.duelsWon}</td>
-                        <td className="text-center px-2 py-2 font-mono text-red-400">{v.duelsLost}</td>
-                        <td
-                          className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
-                            v.duelsNet > 0 ? 'text-green-400' : v.duelsNet < 0 ? 'text-red-400' : 'text-zinc-400'
-                          }`}
-                        >
-                          {v.duelsNet > 0 ? '+' : ''}{v.duelsNet}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.duelsWon > 0, (v) => v.duelsWon);
+                  return (
+                    <HighlightCard
+                      title="Más duelos ganados"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].duelsWon} ganados` : '—'}
+                      tone="green"
+                    />
+                  );
+                })()}
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.duelsWon + v.duelsLost > 0, (v) => v.duelsNet);
+                  return (
+                    <HighlightCard
+                      title="Mejor neto en duelos"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].duelsNet > 0 ? '+' : ''}${leaders[0].duelsNet} pts` : '—'}
+                      tone={leaders.length > 0 && leaders[0].duelsNet < 0 ? 'red' : 'amber'}
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full sm:min-w-[560px] table-fixed text-sm border-separate border-spacing-y-1.5">
+                  <thead>
+                    <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                      <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
+                      <th className="text-left px-3 py-1">Viewer</th>
+                      <th className="text-center px-2 py-1 w-24">Ganados</th>
+                      <th className="text-center px-2 py-1 w-24">Perdidos</th>
+                      <th className="text-center px-3 py-1 w-24">Neto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...data.leaderboard]
+                      .sort((a, b) => b.duelsNet - a.duelsNet)
+                      .map((v, i) => (
+                        <tr key={v.voterKey} className="bg-zinc-900/50">
+                          <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
+                          <td className="px-3 py-2 overflow-hidden">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
+                              <PlatformBadge platform={v.platform} />
+                            </div>
+                          </td>
+                          <td className="text-center px-2 py-2 font-mono text-green-400">{v.duelsWon}</td>
+                          <td className="text-center px-2 py-2 font-mono text-red-400">{v.duelsLost}</td>
+                          <td
+                            className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
+                              v.duelsNet > 0 ? 'text-green-400' : v.duelsNet < 0 ? 'text-red-400' : 'text-zinc-400'
+                            }`}
+                          >
+                            {v.duelsNet > 0 ? '+' : ''}{v.duelsNet}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
 
           {tab === 'robos' && (
-            <div className="overflow-x-auto">
-              <table className="w-full sm:min-w-[620px] table-fixed text-sm border-separate border-spacing-y-1.5">
-                <thead>
-                  <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="text-left px-3 py-1">Viewer</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Éxitos</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Intentos</th>
-                    <th className="text-center px-2 py-1 w-24">Veces robado</th>
-                    <th className="text-center px-3 py-1 w-24">Neto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...data.leaderboard]
-                    .sort((a, b) => b.robberyNet - a.robberyNet)
-                    .map((v) => (
-                      <tr key={v.voterKey} className="bg-zinc-900/50">
-                        <td className="px-3 py-2 overflow-hidden rounded-l-lg">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                            <PlatformBadge platform={v.platform} />
-                          </div>
-                        </td>
-                        <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesSucceeded}</td>
-                        <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesAttempted}</td>
-                        <td className="text-center px-2 py-2 font-mono text-zinc-400">{v.timesRobbed}</td>
-                        <td
-                          className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
-                            v.robberyNet > 0 ? 'text-green-400' : v.robberyNet < 0 ? 'text-red-400' : 'text-zinc-400'
-                          }`}
-                        >
-                          {v.robberyNet > 0 ? '+' : ''}{v.robberyNet}
-                        </td>
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.robberiesSucceeded > 0, (v) => v.robberiesSucceeded);
+                  return (
+                    <HighlightCard
+                      title="Mejor ladrón"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].robberiesSucceeded} robos exitosos` : '—'}
+                      tone="green"
+                    />
+                  );
+                })()}
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.timesRobbed > 0, (v) => v.timesRobbed);
+                  return (
+                    <HighlightCard
+                      title="Blanco favorito (más veces robado)"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].timesRobbed} veces` : '—'}
+                      tone="red"
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full sm:min-w-[660px] table-fixed text-sm border-separate border-spacing-y-1.5">
+                  <thead>
+                    <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                      <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
+                      <th className="text-left px-3 py-1">Viewer</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Éxitos</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Intentos</th>
+                      <th className="text-center px-2 py-1 w-24">Veces robado</th>
+                      <th className="text-center px-3 py-1 w-24">Neto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...data.leaderboard]
+                      .sort((a, b) => b.robberyNet - a.robberyNet)
+                      .map((v, i) => (
+                        <tr key={v.voterKey} className="bg-zinc-900/50">
+                          <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
+                          <td className="px-3 py-2 overflow-hidden">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
+                              <PlatformBadge platform={v.platform} />
+                            </div>
+                          </td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesSucceeded}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesAttempted}</td>
+                          <td className="text-center px-2 py-2 font-mono text-zinc-400">{v.timesRobbed}</td>
+                          <td
+                            className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
+                              v.robberyNet > 0 ? 'text-green-400' : v.robberyNet < 0 ? 'text-red-400' : 'text-zinc-400'
+                            }`}
+                          >
+                            {v.robberyNet > 0 ? '+' : ''}{v.robberyNet}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
 
           {tab === 'bombas' && (
-            <div className="overflow-x-auto">
-              <table className="w-full sm:min-w-[560px] table-fixed text-sm border-separate border-spacing-y-1.5">
-                <thead>
-                  <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                    <th className="text-left px-3 py-1">Viewer</th>
-                    <th className="text-center px-2 py-1 w-24">Sobrevivió</th>
-                    <th className="text-center px-2 py-1 w-24">Explotó</th>
-                    <th className="text-center px-3 py-1 w-24">Neto</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[...data.leaderboard]
-                    .sort((a, b) => (b.pointsGainedFromBombs - b.pointsLostToBombs) - (a.pointsGainedFromBombs - a.pointsLostToBombs))
-                    .map((v) => {
-                      const bombNet = v.pointsGainedFromBombs - v.pointsLostToBombs;
-                      return (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.bombsSurvived > 0, (v) => v.bombsSurvived);
+                  return (
+                    <HighlightCard
+                      title="Más bombas sobrevividas"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].bombsSurvived} sobrevividas` : '—'}
+                      tone="green"
+                    />
+                  );
+                })()}
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.pointsLostToBombs > 0, (v) => v.pointsLostToBombs);
+                  return (
+                    <HighlightCard
+                      title="Mayor pérdida por bombas"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `-${leaders[0].pointsLostToBombs} pts` : '—'}
+                      tone="red"
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full sm:min-w-[560px] table-fixed text-sm border-separate border-spacing-y-1.5">
+                  <thead>
+                    <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                      <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
+                      <th className="text-left px-3 py-1">Viewer</th>
+                      <th className="text-center px-2 py-1 w-24">Sobrevivió</th>
+                      <th className="text-center px-2 py-1 w-24">Explotó</th>
+                      <th className="text-center px-3 py-1 w-24">Neto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...data.leaderboard]
+                      .sort((a, b) => bombNet(b) - bombNet(a))
+                      .map((v, i) => (
                         <tr key={v.voterKey} className="bg-zinc-900/50">
-                          <td className="px-3 py-2 overflow-hidden rounded-l-lg">
+                          <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
+                          <td className="px-3 py-2 overflow-hidden">
                             <div className="flex items-center gap-2 min-w-0">
                               <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
                               <PlatformBadge platform={v.platform} />
@@ -323,17 +459,17 @@ export default function ViewersPage() {
                           <td className="text-center px-2 py-2 font-mono text-red-400">{v.bombsExplodedOn}</td>
                           <td
                             className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
-                              bombNet > 0 ? 'text-green-400' : bombNet < 0 ? 'text-red-400' : 'text-zinc-400'
+                              bombNet(v) > 0 ? 'text-green-400' : bombNet(v) < 0 ? 'text-red-400' : 'text-zinc-400'
                             }`}
                           >
-                            {bombNet > 0 ? '+' : ''}{bombNet}
+                            {bombNet(v) > 0 ? '+' : ''}{bombNet(v)}
                           </td>
                         </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </>
       )}
