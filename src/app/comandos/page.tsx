@@ -82,6 +82,18 @@ export default function ComandosPage() {
           <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
           <span className="text-zinc-400"> — apostá puntos al resultado de la ronda actual</span>
         </div>
+        <div>
+          <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
+          <span className="text-zinc-400"> — desafiá a otro chatter a una apuesta 1 contra 1 (tiene 2 min para aceptar)</span>
+        </div>
+        <div>
+          <code className="text-amber-400 font-semibold">!aceptar</code>
+          <span className="text-zinc-400"> — aceptá el duelo pendiente que te hicieron</span>
+        </div>
+        <div>
+          <code className="text-amber-400 font-semibold">!robar &lt;usuario&gt;</code>
+          <span className="text-zinc-400"> — intentá robarle puntos a otro chatter (cooldown de 10 min)</span>
+        </div>
         <div className="text-zinc-500 text-xs mt-2">
           Ejemplo: <code className="text-amber-400">!favorito jason</code> · funciona con el nombre completo o
           solo una parte (ej. &quot;payaso&quot; en vez de &quot;el payaso&quot;). Hacé click en cualquier nombre
@@ -91,6 +103,10 @@ export default function ComandosPage() {
           Ejemplo de predicción: <code className="text-amber-400">!prediccion killer win 100</code> — tenés 5
           minutos desde que sale el personaje para predecir. Mirá tu balance y aciertos en{' '}
           <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Viewers y predicciones</Link>.
+        </div>
+        <div className="text-zinc-500 text-xs mt-1">
+          Duelo y robo: cuanto menos patrimonio tengas contra tu rival, más chances tenés de ganar/robar con éxito
+          (nunca menos de 15% ni más de 85%). Solo se puede robar a quien tenga 50 puntos o más.
         </div>
       </div>
 
