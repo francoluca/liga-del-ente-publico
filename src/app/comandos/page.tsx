@@ -117,6 +117,9 @@ export default function ComandosPage() {
           Quien la tiene cuando explota pierde el 20% de su balance, repartido entre todos los que la sostuvieron
           antes en esa ronda.
         </div>
+        <div className="text-zinc-500 text-xs mt-1">
+          Además, por estar activo en el chat ganás +3 puntos gratis cada 10 minutos — no hace falta ningún comando.
+        </div>
       </div>
 
       <section className="mb-10">
