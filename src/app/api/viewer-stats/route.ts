@@ -15,6 +15,17 @@ interface ViewerStatRow {
   total_payout: number;
   net_profit: number;
   biggest_payout: number;
+  duels_won: number;
+  duels_lost: number;
+  duels_net: number;
+  robberies_attempted: number;
+  robberies_succeeded: number;
+  times_robbed: number;
+  robbery_net: number;
+  bombs_survived: number;
+  bombs_exploded_on: number;
+  points_lost_to_bombs: number;
+  points_gained_from_bombs: number;
 }
 
 interface ViewerStat {
@@ -32,6 +43,18 @@ interface ViewerStat {
   totalPayout: number;
   netProfit: number;
   winRate: number | null;
+  duelsWon: number;
+  duelsLost: number;
+  duelsNet: number;
+  robberiesAttempted: number;
+  robberiesSucceeded: number;
+  timesRobbed: number;
+  robberyNet: number;
+  bombsSurvived: number;
+  bombsExplodedOn: number;
+  pointsLostToBombs: number;
+  pointsGainedFromBombs: number;
+  pvpNet: number;
 }
 
 const MIN_QUALIFYING = 5;
@@ -56,6 +79,52 @@ const STATS_SQL = `
       MAX(payout) AS biggest_payout
     FROM resolved
     GROUP BY voter_key
+  ),
+  duel_rows AS (
+    SELECT challenger_key AS voter_key, winner_key, stake FROM duels WHERE status = 'resolved'
+    UNION ALL
+    SELECT opponent_key AS voter_key, winner_key, stake FROM duels WHERE status = 'resolved'
+  ),
+  duel_stats AS (
+    SELECT voter_key,
+      SUM(CASE WHEN voter_key = winner_key THEN 1 ELSE 0 END) AS duels_won,
+      SUM(CASE WHEN voter_key != winner_key THEN 1 ELSE 0 END) AS duels_lost,
+      SUM(CASE WHEN voter_key = winner_key THEN stake ELSE -stake END) AS duels_net
+    FROM duel_rows
+    GROUP BY voter_key
+  ),
+  robbery_rows AS (
+    SELECT attacker_key AS voter_key, 1 AS attempted, success AS succeeded,
+           CASE WHEN success = 1 THEN amount ELSE -amount END AS attacker_delta,
+           0 AS victimized, 0 AS victim_delta
+    FROM robbery_attempts
+    UNION ALL
+    SELECT victim_key AS voter_key, 0, 0, 0, 1,
+           CASE WHEN success = 1 THEN -amount ELSE amount END
+    FROM robbery_attempts
+  ),
+  robbery_stats AS (
+    SELECT voter_key,
+      SUM(attempted) AS robberies_attempted,
+      SUM(succeeded) AS robberies_succeeded,
+      SUM(victimized) AS times_robbed,
+      SUM(attacker_delta) + SUM(victim_delta) AS robbery_net
+    FROM robbery_rows
+    GROUP BY voter_key
+  ),
+  bomb_loss AS (
+    SELECT holder_key AS voter_key, COUNT(*) AS bombs_exploded_on, SUM(lost_amount) AS points_lost_to_bombs
+    FROM bomb_rounds WHERE status = 'exploded'
+    GROUP BY holder_key
+  ),
+  bomb_survive AS (
+    SELECT bh.voter_key,
+      COUNT(*) AS bombs_survived,
+      SUM(br.lost_amount / br.recipient_count) AS points_gained_from_bombs
+    FROM bomb_holders bh
+    JOIN bomb_rounds br ON br.id = bh.round_id AND br.status = 'exploded'
+    WHERE bh.voter_key != br.holder_key
+    GROUP BY bh.voter_key
   )
   SELECT
     cp.voter_key,
@@ -70,9 +139,24 @@ const STATS_SQL = `
     COALESCE(ps.total_staked, 0) AS total_staked,
     COALESCE(ps.total_payout, 0) AS total_payout,
     (COALESCE(ps.total_payout, 0) - COALESCE(ps.total_staked, 0)) AS net_profit,
-    COALESCE(ps.biggest_payout, 0) AS biggest_payout
+    COALESCE(ps.biggest_payout, 0) AS biggest_payout,
+    COALESCE(ds.duels_won, 0) AS duels_won,
+    COALESCE(ds.duels_lost, 0) AS duels_lost,
+    COALESCE(ds.duels_net, 0) AS duels_net,
+    COALESCE(rs.robberies_attempted, 0) AS robberies_attempted,
+    COALESCE(rs.robberies_succeeded, 0) AS robberies_succeeded,
+    COALESCE(rs.times_robbed, 0) AS times_robbed,
+    COALESCE(rs.robbery_net, 0) AS robbery_net,
+    COALESCE(bsv.bombs_survived, 0) AS bombs_survived,
+    COALESCE(bl.bombs_exploded_on, 0) AS bombs_exploded_on,
+    COALESCE(bl.points_lost_to_bombs, 0) AS points_lost_to_bombs,
+    COALESCE(bsv.points_gained_from_bombs, 0) AS points_gained_from_bombs
   FROM chatter_points cp
   LEFT JOIN pred_stats ps ON ps.voter_key = cp.voter_key
+  LEFT JOIN duel_stats ds ON ds.voter_key = cp.voter_key
+  LEFT JOIN robbery_stats rs ON rs.voter_key = cp.voter_key
+  LEFT JOIN bomb_loss bl ON bl.voter_key = cp.voter_key
+  LEFT JOIN bomb_survive bsv ON bsv.voter_key = cp.voter_key
   ORDER BY net_worth DESC
 `;
 
@@ -95,6 +179,18 @@ export async function GET() {
       totalPayout: r.total_payout,
       netProfit: r.net_profit,
       winRate: r.resolved_count > 0 ? r.wins / r.resolved_count : null,
+      duelsWon: r.duels_won,
+      duelsLost: r.duels_lost,
+      duelsNet: r.duels_net,
+      robberiesAttempted: r.robberies_attempted,
+      robberiesSucceeded: r.robberies_succeeded,
+      timesRobbed: r.times_robbed,
+      robberyNet: r.robbery_net,
+      bombsSurvived: r.bombs_survived,
+      bombsExplodedOn: r.bombs_exploded_on,
+      pointsLostToBombs: r.points_lost_to_bombs,
+      pointsGainedFromBombs: r.points_gained_from_bombs,
+      pvpNet: r.duels_net + r.robbery_net + (r.points_gained_from_bombs - r.points_lost_to_bombs),
     }));
 
     const topBalance = leaderboard[0] ?? null;

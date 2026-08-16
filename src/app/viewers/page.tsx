@@ -17,6 +17,18 @@ interface ViewerStat {
   totalPayout: number;
   netProfit: number;
   winRate: number | null;
+  duelsWon: number;
+  duelsLost: number;
+  duelsNet: number;
+  robberiesAttempted: number;
+  robberiesSucceeded: number;
+  timesRobbed: number;
+  robberyNet: number;
+  bombsSurvived: number;
+  bombsExplodedOn: number;
+  pointsLostToBombs: number;
+  pointsGainedFromBombs: number;
+  pvpNet: number;
 }
 
 interface ViewerStatsData {
@@ -178,6 +190,56 @@ export default function ViewersPage() {
           {data.leaderboard.length === 0 && (
             <div className="text-zinc-600 italic text-sm mt-4">Todavía nadie participó del chat.</div>
           )}
+
+          <div className="text-zinc-400 text-xs uppercase tracking-wider font-bold mt-10 mb-3">
+            Duelos, robos y bombas
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full sm:min-w-[760px] table-fixed text-sm border-separate border-spacing-y-1.5">
+              <thead>
+                <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                  <th className="text-left px-3 py-1">Viewer</th>
+                  <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Duelos (G-P)</th>
+                  <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Robos (✓/intentos)</th>
+                  <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Veces robado</th>
+                  <th className="hidden sm:table-cell text-center px-2 py-1 w-28">Bombas (sobrevivió/explotó)</th>
+                  <th className="text-center px-3 py-1 w-20 sm:w-24">Neto PvP</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[...data.leaderboard]
+                  .sort((a, b) => b.pvpNet - a.pvpNet)
+                  .map((v) => (
+                    <tr key={v.voterKey} className="bg-zinc-900/50">
+                      <td className="px-3 py-2 overflow-hidden rounded-l-lg">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
+                          <PlatformBadge platform={v.platform} />
+                        </div>
+                      </td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">
+                        {v.duelsWon}-{v.duelsLost}
+                      </td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">
+                        {v.robberiesSucceeded}/{v.robberiesAttempted}
+                      </td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.timesRobbed}</td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">
+                        {v.bombsSurvived}/{v.bombsExplodedOn}
+                      </td>
+                      <td
+                        className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
+                          v.pvpNet > 0 ? 'text-green-400' : v.pvpNet < 0 ? 'text-red-400' : 'text-zinc-400'
+                        }`}
+                      >
+                        {v.pvpNet > 0 ? '+' : ''}{v.pvpNet}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
     </main>

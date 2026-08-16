@@ -94,6 +94,10 @@ export default function ComandosPage() {
           <code className="text-amber-400 font-semibold">!robar &lt;usuario&gt;</code>
           <span className="text-zinc-400"> — intentá robarle puntos a otro chatter (cooldown de 10 min)</span>
         </div>
+        <div>
+          <code className="text-amber-400 font-semibold">!bomba</code>
+          <span className="text-zinc-400"> — arrancá una bomba que se pasa sola al azar entre chatters hasta que explota</span>
+        </div>
         <div className="text-zinc-500 text-xs mt-2">
           Ejemplo: <code className="text-amber-400">!favorito jason</code> · funciona con el nombre completo o
           solo una parte (ej. &quot;payaso&quot; en vez de &quot;el payaso&quot;). Hacé click en cualquier nombre
@@ -107,6 +111,11 @@ export default function ComandosPage() {
         <div className="text-zinc-500 text-xs mt-1">
           Duelo y robo: cuanto menos patrimonio tengas contra tu rival, más chances tenés de ganar/robar con éxito
           (nunca menos de 15% ni más de 85%). Solo se puede robar a quien tenga 50 puntos o más.
+        </div>
+        <div className="text-zinc-500 text-xs mt-1">
+          Bomba: se pasa sola cada 8-20 segundos y explota en un momento oculto entre 45 segundos y 3 minutos.
+          Quien la tiene cuando explota pierde el 20% de su balance, repartido entre todos los que la sostuvieron
+          antes en esa ronda.
         </div>
       </div>
 
