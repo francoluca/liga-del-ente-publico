@@ -302,8 +302,8 @@ export default function ViewersPage() {
                     <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                       <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                       <th className="text-left px-3 py-1">Viewer</th>
-                      <th className="text-center px-2 py-1 w-24">Ganados</th>
-                      <th className="text-center px-2 py-1 w-24">Perdidos</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Ganados</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Perdidos</th>
                       <th className="text-center px-3 py-1 w-24">Neto</th>
                     </tr>
                   </thead>
@@ -319,8 +319,8 @@ export default function ViewersPage() {
                               <PlatformBadge platform={v.platform} />
                             </div>
                           </td>
-                          <td className="text-center px-2 py-2 font-mono text-green-400">{v.duelsWon}</td>
-                          <td className="text-center px-2 py-2 font-mono text-red-400">{v.duelsLost}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-green-400">{v.duelsWon}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-red-400">{v.duelsLost}</td>
                           <td
                             className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
                               v.duelsNet > 0 ? 'text-green-400' : v.duelsNet < 0 ? 'text-red-400' : 'text-zinc-400'
@@ -371,7 +371,7 @@ export default function ViewersPage() {
                       <th className="text-left px-3 py-1">Viewer</th>
                       <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Éxitos</th>
                       <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Intentos</th>
-                      <th className="text-center px-2 py-1 w-24">Veces robado</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Veces robado</th>
                       <th className="text-center px-3 py-1 w-24">Neto</th>
                     </tr>
                   </thead>
@@ -389,7 +389,7 @@ export default function ViewersPage() {
                           </td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesSucceeded}</td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesAttempted}</td>
-                          <td className="text-center px-2 py-2 font-mono text-zinc-400">{v.timesRobbed}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.timesRobbed}</td>
                           <td
                             className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
                               v.robberyNet > 0 ? 'text-green-400' : v.robberyNet < 0 ? 'text-red-400' : 'text-zinc-400'
@@ -438,8 +438,8 @@ export default function ViewersPage() {
                     <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                       <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                       <th className="text-left px-3 py-1">Viewer</th>
-                      <th className="text-center px-2 py-1 w-24">Sobrevivió</th>
-                      <th className="text-center px-2 py-1 w-24">Explotó</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Sobrevivió</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Explotó</th>
                       <th className="text-center px-3 py-1 w-24">Neto</th>
                     </tr>
                   </thead>
@@ -455,8 +455,8 @@ export default function ViewersPage() {
                               <PlatformBadge platform={v.platform} />
                             </div>
                           </td>
-                          <td className="text-center px-2 py-2 font-mono text-green-400">{v.bombsSurvived}</td>
-                          <td className="text-center px-2 py-2 font-mono text-red-400">{v.bombsExplodedOn}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-green-400">{v.bombsSurvived}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-red-400">{v.bombsExplodedOn}</td>
                           <td
                             className={`text-center px-3 py-2 font-mono font-bold rounded-r-lg ${
                               bombNet(v) > 0 ? 'text-green-400' : bombNet(v) < 0 ? 'text-red-400' : 'text-zinc-400'
