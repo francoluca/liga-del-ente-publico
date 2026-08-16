@@ -31,7 +31,7 @@ const divisionConfig: Record<Division, { color: string; icon: string }> = {
   Ceniza: { color: '#4a3f31', icon: 'rank_ceniza.webp' },
 };
 
-function CharacterAvatar({ src, alt, size }: { src: string; alt: string; size: number }) {
+function CharacterAvatar({ src, alt, size, played }: { src: string; alt: string; size: number; played: boolean }) {
   const [imgSrc, setImgSrc] = useState(src);
   const [hasError, setHasError] = useState(false);
 
@@ -48,8 +48,16 @@ function CharacterAvatar({ src, alt, size }: { src: string; alt: string; size: n
   };
 
   return (
-    <div className="relative rounded-lg overflow-hidden border-2 border-zinc-700 flex-shrink-0" style={{ width: size, height: size }}>
-      <Image src={imgSrc} alt={alt} fill className="object-cover" unoptimized onError={handleError} />
+    <div className="relative flex-shrink-0" style={{ width: size, height: size }}>
+      <div className="relative w-full h-full rounded-lg overflow-hidden border-2 border-zinc-700">
+        <Image src={imgSrc} alt={alt} fill className="object-cover" unoptimized onError={handleError} />
+      </div>
+      <span
+        className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-zinc-950 ${
+          played ? 'bg-green-400' : 'bg-zinc-600'
+        }`}
+        title={played ? 'Ya jugó esta ronda' : 'Todavía no jugó esta ronda'}
+      />
     </div>
   );
 }
@@ -159,7 +167,6 @@ export default function PosicionesPage() {
                   <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                     <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                     <th className="text-left px-3 py-1">Personaje</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-16">Ronda</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S1</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S2</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-14">S3</th>
@@ -188,7 +195,7 @@ export default function PosicionesPage() {
                         <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{index + 1}</td>
                         <td className="px-3 py-2 overflow-hidden">
                           <div className="flex items-center gap-3 min-w-0">
-                            <CharacterAvatar src={`/${char.image}`} alt={char.name} size={40} />
+                            <CharacterAvatar src={`/${char.image}`} alt={char.name} size={40} played={char.last_round_played !== null} />
                             <div className="flex items-center gap-2 min-w-0">
                               <span className="font-semibold text-white uppercase truncate" title={char.name}>{char.name}</span>
                               {char.champion > 0 && (
@@ -198,14 +205,6 @@ export default function PosicionesPage() {
                               )}
                             </div>
                           </div>
-                        </td>
-                        <td className="hidden sm:table-cell text-center px-2 py-2">
-                          <span
-                            className={`inline-block w-2.5 h-2.5 rounded-full ${
-                              char.last_round_played !== null ? 'bg-green-400' : 'bg-zinc-600'
-                            }`}
-                            title={char.last_round_played !== null ? 'Ya jugó esta ronda' : 'Todavía no jugó esta ronda'}
-                          />
                         </td>
                         {[char.pl_t1, char.pl_t2, char.pl_t3, char.pl_t4, char.pl_t5].map((val, i) => (
                           <td key={i} className="hidden sm:table-cell text-center px-2 py-2 text-zinc-400 font-mono">{val != null ? val : '—'}</td>
