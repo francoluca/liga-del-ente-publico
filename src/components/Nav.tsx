@@ -8,7 +8,7 @@ const links = [
   { href: '/posiciones', label: 'Posiciones' },
   { href: '/historial', label: 'Historial' },
   { href: '/comandos', label: 'Comandos' },
-  { href: '/viewers', label: 'Chatters' },
+  { href: '/viewers', label: 'Viewers' },
 ];
 
 export default function Nav() {
