@@ -94,7 +94,7 @@ export default function ComandosPage() {
           <div className="text-zinc-500 text-xs mt-1">
             Ejemplo de predicción: <code className="text-amber-400">!prediccion killer win 100</code> — tienes 5
             minutos desde que sale el personaje para predecir. Consulta tu balance y aciertos en{' '}
-            <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Viewers y predicciones</Link>.
+            <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Ranking del chat</Link>.
           </div>
         </div>
 
