@@ -99,7 +99,7 @@ export default function ComandosPage() {
         </div>
 
         <div className="border-t border-zinc-800 pt-4">
-          <h2 className="text-sm font-bold uppercase tracking-wide text-amber-500 mb-2">Durante los Playoffs</h2>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-violet-400 mb-2">Durante los Playoffs</h2>
           <div className="space-y-1">
             <div>
               <code className="text-amber-400 font-semibold">!prediccionduelo &lt;killer|survivor&gt; &lt;personaje&gt; &lt;monto&gt;</code>
