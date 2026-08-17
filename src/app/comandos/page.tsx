@@ -69,56 +69,89 @@ export default function ComandosPage() {
         <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 my-8">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 my-8 space-y-6">
         <div>
-          <code className="text-amber-400 font-semibold">!favorito &lt;nombre del personaje&gt;</code>
-          <span className="text-zinc-400"> — vota el próximo personaje</span>
+          <h2 className="text-sm font-bold uppercase tracking-wide text-sky-400 mb-2">Durante las partidas de la Liga</h2>
+          <div className="space-y-1">
+            <div>
+              <code className="text-amber-400 font-semibold">!favorito &lt;nombre del personaje&gt;</code>
+              <span className="text-zinc-400"> — vota el próximo personaje</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!perk &lt;nombre de la perk&gt;</code>
+              <span className="text-zinc-400"> — vota una perk (incluye &quot;vacio&quot;)</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+              <span className="text-zinc-400"> — apostá puntos al resultado de la ronda actual</span>
+            </div>
+          </div>
+          <div className="text-zinc-500 text-xs mt-2">
+            Ejemplo: <code className="text-amber-400">!favorito jason</code> · funciona con el nombre completo o
+            solo una parte (ej. &quot;payaso&quot; en vez de &quot;el payaso&quot;). Hacé click en cualquier nombre
+            de la lista para copiar el comando listo para pegar en el chat.
+          </div>
+          <div className="text-zinc-500 text-xs mt-1">
+            Ejemplo de predicción: <code className="text-amber-400">!prediccion killer win 100</code> — tenés 5
+            minutos desde que sale el personaje para predecir. Mirá tu balance y aciertos en{' '}
+            <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Viewers y predicciones</Link>.
+          </div>
         </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!perk &lt;nombre de la perk&gt;</code>
-          <span className="text-zinc-400"> — vota una perk (incluye &quot;vacio&quot;)</span>
+
+        <div className="border-t border-zinc-800 pt-4">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-amber-500 mb-2">Durante los Playoffs</h2>
+          <div className="space-y-1">
+            <div>
+              <code className="text-amber-400 font-semibold">!prediccionduelo &lt;killer|survivor&gt; &lt;personaje&gt; &lt;monto&gt;</code>
+              <span className="text-zinc-400"> — apostá a quién gana un cruce (semifinal o final)</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!prediccionpartida &lt;killer|survivor&gt; &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+              <span className="text-zinc-400"> — apostá a cómo le va a un personaje en un juego puntual de su cruce (5 min)</span>
+            </div>
+          </div>
+          <div className="text-zinc-500 text-xs mt-2">
+            Ambas predicciones solo están disponibles cuando la transmisión las abre desde el panel de playoffs —
+            el crossing tiene hasta 10 minutos para predecir quién gana, y cada juego individual 5 minutos.
+          </div>
         </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
-          <span className="text-zinc-400"> — apostá puntos al resultado de la ronda actual</span>
-        </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
-          <span className="text-zinc-400"> — desafiá a otro chatter a una apuesta 1 contra 1 (tiene 2 min para aceptar)</span>
-        </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!aceptar</code>
-          <span className="text-zinc-400"> — aceptá el duelo pendiente que te hicieron</span>
-        </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!robar &lt;usuario&gt;</code>
-          <span className="text-zinc-400"> — intentá robarle puntos a otro chatter (cooldown de 10 min)</span>
-        </div>
-        <div>
-          <code className="text-amber-400 font-semibold">!bomba</code>
-          <span className="text-zinc-400"> — arrancá una bomba que se pasa sola al azar entre chatters hasta que explota</span>
-        </div>
-        <div className="text-zinc-500 text-xs mt-2">
-          Ejemplo: <code className="text-amber-400">!favorito jason</code> · funciona con el nombre completo o
-          solo una parte (ej. &quot;payaso&quot; en vez de &quot;el payaso&quot;). Hacé click en cualquier nombre
-          de la lista para copiar el comando listo para pegar en el chat.
-        </div>
-        <div className="text-zinc-500 text-xs mt-1">
-          Ejemplo de predicción: <code className="text-amber-400">!prediccion killer win 100</code> — tenés 5
-          minutos desde que sale el personaje para predecir. Mirá tu balance y aciertos en{' '}
-          <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Viewers y predicciones</Link>.
-        </div>
-        <div className="text-zinc-500 text-xs mt-1">
-          Duelo y robo: cuanto menos patrimonio tengas contra tu rival, más chances tenés de ganar/robar con éxito
-          (nunca menos de 15% ni más de 85%). Solo se puede robar a quien tenga 50 puntos o más.
-        </div>
-        <div className="text-zinc-500 text-xs mt-1">
-          Bomba: se pasa sola cada 8-20 segundos y explota en un momento oculto entre 45 segundos y 3 minutos.
-          Quien la tiene cuando explota pierde el 20% de su balance, repartido entre todos los que la sostuvieron
-          antes en esa ronda.
-        </div>
-        <div className="text-zinc-500 text-xs mt-1">
-          Además, por estar activo en el chat ganás +3 puntos gratis cada 10 minutos — no hace falta ningún comando.
+
+        <div className="border-t border-zinc-800 pt-4">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-fuchsia-400 mb-2">En cualquier momento (chat general)</h2>
+          <div className="space-y-1">
+            <div>
+              <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
+              <span className="text-zinc-400"> — desafiá a otro chatter a una apuesta 1 contra 1 (tiene 2 min para aceptar)</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!aceptar</code>
+              <span className="text-zinc-400"> — aceptá el duelo pendiente que te hicieron</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!robar &lt;usuario&gt;</code>
+              <span className="text-zinc-400"> — intentá robarle puntos a otro chatter (cooldown de 10 min)</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!bomba</code>
+              <span className="text-zinc-400"> — arrancá una bomba que se pasa sola al azar entre chatters hasta que explota</span>
+            </div>
+            <div>
+              <code className="text-amber-400 font-semibold">!ligadelente</code>
+              <span className="text-zinc-400"> — recibí el link al sitio público de la Liga</span>
+            </div>
+          </div>
+          <div className="text-zinc-500 text-xs mt-2">
+            Duelo y robo: cuanto menos patrimonio tengas contra tu rival, más chances tenés de ganar/robar con éxito
+            (nunca menos de 15% ni más de 85%). Solo se puede robar a quien tenga 50 puntos o más.
+          </div>
+          <div className="text-zinc-500 text-xs mt-1">
+            Bomba: se pasa sola cada 8-20 segundos y explota en un momento oculto entre 45 segundos y 3 minutos.
+            Quien la tiene cuando explota pierde el 20% de su balance, repartido entre todos los que la sostuvieron
+            antes en esa ronda.
+          </div>
+          <div className="text-zinc-500 text-xs mt-1">
+            Además, por estar activo en el chat ganás +3 puntos gratis cada 10 minutos — no hace falta ningún comando.
+          </div>
         </div>
       </div>
 
