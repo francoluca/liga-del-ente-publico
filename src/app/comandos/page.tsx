@@ -146,15 +146,20 @@ export default function ComandosPage() {
 
           <div className="mb-4">
             <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
-            <span className="text-zinc-500 text-xs"> · </span>
-            <code className="text-amber-400 font-semibold">!aceptar</code>
             <p className="text-zinc-400 text-sm mt-1">
               Desafía a otro chatter a apostar entre 5 y 100 puntos, cara a cara. Esa persona tiene 2 minutos para
               responder con <code className="text-amber-400">!aceptar</code>; si no responde, el desafío expira y
-              se devuelve la apuesta al que desafió. Quien gana se lleva las dos apuestas juntas. La probabilidad
-              de ganar no es 50/50: cuanto menos patrimonio total tenga alguien comparado con su rival, más
-              chances tiene (nunca menos de 15% ni más de 85% para ninguno de los dos) — así quien va perdiendo en
-              la temporada tiene más con qué remontar.
+              se devuelve la apuesta al que desafió. La probabilidad de ganar no es 50/50: cuanto menos patrimonio
+              total tenga alguien comparado con su rival, más chances tiene (nunca menos de 15% ni más de 85% para
+              ninguno de los dos) — así quien va perdiendo en la temporada tiene más con qué remontar.
+            </p>
+          </div>
+
+          <div className="mb-4">
+            <code className="text-amber-400 font-semibold">!aceptar</code>
+            <p className="text-zinc-400 text-sm mt-1">
+              Acepta el duelo pendiente que alguien te haya iniciado. Al aceptar se resuelve al instante: quien
+              gana se lleva las dos apuestas juntas.
             </p>
           </div>
 
