@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 interface ViewerStat {
   voterKey: string;
   platform: string | null;
+  avatarUrl: string | null;
   displayName: string;
   balance: number;
   reserved: number;
@@ -49,12 +50,76 @@ function Card({ title, children, className = '' }: { title: string; children: Re
   );
 }
 
-function PlatformBadge({ platform }: { platform: string | null }) {
+const PLATFORM_ICONS: Record<string, { label: string; color: string; svg: React.ReactNode }> = {
+  twitch: {
+    label: 'Twitch',
+    color: '#a970ff',
+    svg: (
+      <path d="M4.3 2.5 3 5.7v13.4h4.6V21h2.6l2.3-2.3h3.5L20.9 14V2.5H4.3ZM19 13l-3 3h-3.5L10.2 18.3V16H6.9V4.3H19V13Z M13.9 10.9h1.7V6.1h-1.7v4.8Zm-4.6 0h1.7V6.1H9.3v4.8Z" />
+    ),
+  },
+  youtube: {
+    label: 'YouTube',
+    color: '#ff0000',
+    svg: (
+      <path d="M21.6 7.2s-.2-1.5-.8-2.2c-.8-.8-1.7-.8-2.1-.9C15.9 4 12 4 12 4h0s-3.9 0-6.7.1c-.4 0-1.3.1-2.1.9-.6.6-.8 2.2-.8 2.2S2.2 9 2.2 10.7v1.5c0 1.7.2 3.5.2 3.5s.2 1.5.8 2.2c.8.8 1.8.8 2.3.9 1.7.1 6.5.2 6.5.2s3.9 0 6.7-.2c.4 0 1.3-.1 2.1-.9.6-.6.8-2.2.8-2.2s.2-1.7.2-3.5v-1.5c0-1.7-.2-3.5-.2-3.5ZM9.9 15V8.9l5.8 3.1-5.8 3Z" />
+    ),
+  },
+  kick: {
+    label: 'Kick',
+    color: '#53fc18',
+    svg: (
+      <path d="M2 2h6v5h2V4h2V2h6v6h-2v2h-2v2h2v2h2v6h-6v-2h-2v-3h-2v5H2V2Z" />
+    ),
+  },
+};
+
+function PlatformIcon({ platform }: { platform: string | null }) {
   if (!platform) return null;
+  const icon = PLATFORM_ICONS[platform.toLowerCase()];
+  if (!icon) {
+    return (
+      <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700 flex-shrink-0">
+        {platform}
+      </span>
+    );
+  }
   return (
-    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">
-      {platform}
-    </span>
+    <svg viewBox="0 0 24 24" width="14" height="14" fill={icon.color} className="flex-shrink-0" role="img" aria-label={icon.label}>
+      <title>{icon.label}</title>
+      {icon.svg}
+    </svg>
+  );
+}
+
+function Avatar({ url, name }: { url: string | null; name: string }) {
+  const [errored, setErrored] = useState(false);
+  if (!url || errored) {
+    return (
+      <span className="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-[10px] font-bold text-zinc-400 flex-shrink-0">
+        {name.charAt(0).toUpperCase()}
+      </span>
+    );
+  }
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- external avatar URLs from arbitrary stream platform CDNs, not worth configuring remotePatterns for
+    <img
+      src={url}
+      alt=""
+      referrerPolicy="no-referrer"
+      onError={() => setErrored(true)}
+      className="w-6 h-6 rounded-full object-cover border border-zinc-700 flex-shrink-0"
+    />
+  );
+}
+
+function ViewerIdentity({ v }: { v: { displayName: string; platform: string | null; avatarUrl: string | null } }) {
+  return (
+    <div className="flex items-center gap-2 min-w-0">
+      <Avatar url={v.avatarUrl} name={v.displayName} />
+      <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
+      <PlatformIcon platform={v.platform} />
+    </div>
   );
 }
 
@@ -65,7 +130,7 @@ function HighlightCard({
   tone,
 }: {
   title: string;
-  leaders: { displayName: string; platform: string | null }[];
+  leaders: { displayName: string; platform: string | null; avatarUrl: string | null }[];
   valueLabel: string;
   tone: 'amber' | 'green' | 'red';
 }) {
@@ -78,8 +143,7 @@ function HighlightCard({
           <div className="flex flex-col gap-1.5">
             {leaders.map((l) => (
               <div key={l.displayName} className="flex items-center gap-2 text-sm text-zinc-300">
-                <span>{l.displayName}</span>
-                <PlatformBadge platform={l.platform} />
+                <ViewerIdentity v={l} />
               </div>
             ))}
           </div>
@@ -173,8 +237,7 @@ export default function ViewersPage() {
                       <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
                       <td className="px-3 py-2 overflow-hidden">
                         <div className="flex items-center gap-2 min-w-0">
-                          <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                          <PlatformBadge platform={v.platform} />
+                          <ViewerIdentity v={v} />
                         </div>
                       </td>
                       <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.balance}</td>
@@ -244,8 +307,7 @@ export default function ViewersPage() {
                           <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
                           <td className="px-3 py-2 overflow-hidden">
                             <div className="flex items-center gap-2 min-w-0">
-                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                              <PlatformBadge platform={v.platform} />
+                              <ViewerIdentity v={v} />
                             </div>
                           </td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.resolvedCount}</td>
@@ -315,8 +377,7 @@ export default function ViewersPage() {
                           <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
                           <td className="px-3 py-2 overflow-hidden">
                             <div className="flex items-center gap-2 min-w-0">
-                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                              <PlatformBadge platform={v.platform} />
+                              <ViewerIdentity v={v} />
                             </div>
                           </td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-green-400">{v.duelsWon}</td>
@@ -383,8 +444,7 @@ export default function ViewersPage() {
                           <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
                           <td className="px-3 py-2 overflow-hidden">
                             <div className="flex items-center gap-2 min-w-0">
-                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                              <PlatformBadge platform={v.platform} />
+                              <ViewerIdentity v={v} />
                             </div>
                           </td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.robberiesSucceeded}</td>
@@ -451,8 +511,7 @@ export default function ViewersPage() {
                           <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
                           <td className="px-3 py-2 overflow-hidden">
                             <div className="flex items-center gap-2 min-w-0">
-                              <span className="font-semibold text-white truncate" title={v.displayName}>{v.displayName}</span>
-                              <PlatformBadge platform={v.platform} />
+                              <ViewerIdentity v={v} />
                             </div>
                           </td>
                           <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-green-400">{v.bombsSurvived}</td>

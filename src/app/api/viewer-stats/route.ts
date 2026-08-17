@@ -7,6 +7,7 @@ interface ViewerStatRow {
   reserved: number;
   net_worth: number;
   platform: string | null;
+  avatar_url: string | null;
   resolved_count: number;
   wins: number;
   losses: number;
@@ -31,6 +32,7 @@ interface ViewerStatRow {
 interface ViewerStat {
   voterKey: string;
   platform: string | null;
+  avatarUrl: string | null;
   displayName: string;
   balance: number;
   reserved: number;
@@ -132,6 +134,7 @@ const STATS_SQL = `
     cp.reserved,
     (cp.balance + cp.reserved) AS net_worth,
     COALESCE(ps.platform, cp.platform) AS platform,
+    cp.avatar_url AS avatar_url,
     COALESCE(ps.resolved_count, 0) AS resolved_count,
     COALESCE(ps.wins, 0) AS wins,
     COALESCE(ps.losses, 0) AS losses,
@@ -167,6 +170,7 @@ export async function GET() {
     const leaderboard: ViewerStat[] = rows.map((r) => ({
       voterKey: r.voter_key,
       platform: r.platform,
+      avatarUrl: r.avatar_url,
       displayName: r.voter_key.includes(':') ? r.voter_key.split(':').slice(1).join(':') : r.voter_key,
       balance: r.balance,
       reserved: r.reserved,
