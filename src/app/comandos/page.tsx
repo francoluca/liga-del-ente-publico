@@ -79,7 +79,7 @@ export default function ComandosPage() {
             </div>
             <div>
               <code className="text-amber-400 font-semibold">!perk &lt;nombre de la perk&gt;</code>
-              <span className="text-zinc-400"> — vota una perk (incluye &quot;vacio&quot;)</span>
+              <span className="text-zinc-400"> — vota una perk o slot vacio</span>
             </div>
             <div>
               <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
