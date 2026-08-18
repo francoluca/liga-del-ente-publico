@@ -121,7 +121,7 @@ export default function ComandosPage() {
           </p>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold">!prediccionduelo &lt;killer|survivor&gt; &lt;personaje&gt; &lt;monto&gt;</code>
+            <code className="text-amber-400 font-semibold">!prediccionduelo &lt;personaje&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Apuesta entre 5 y 100 puntos a quién se queda con un cruce completo (semifinal o final), que se juega
               a mejor de 2 partidas. El ganador del cruce no es simplemente quien gane más partidas sueltas, sino
@@ -129,14 +129,22 @@ export default function ComandosPage() {
               abre la predicción. Mismas reglas de pago que <code className="text-amber-400">!prediccion</code>:
               el doble de lo apostado más la parte del pozo de los que fallaron si acierta, la apuesta perdida si no.
             </p>
+            <p className="text-zinc-500 text-xs mt-1">
+              Ejemplo: <code className="text-amber-400">!prediccionduelo huntress 50</code> — no hace falta indicar
+              killer o survivor, se detecta solo con el nombre del personaje.
+            </p>
           </div>
 
           <div>
-            <code className="text-amber-400 font-semibold">!prediccionpartida &lt;killer|survivor&gt; &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+            <code className="text-amber-400 font-semibold">!prediccionpartida &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Es la versión playoff de <code className="text-amber-400">!prediccion</code>: apuesta al resultado
               (victoria, empate o derrota) de una sola partida puntual dentro de un cruce, no del cruce entero.
               Se abre por 5 minutos cuando la transmisión la activa para esa partida específica.
+            </p>
+            <p className="text-zinc-500 text-xs mt-1">
+              Ejemplo: <code className="text-amber-400">!prediccionpartida huntress win 50</code> — tampoco hace
+              falta indicar killer o survivor acá.
             </p>
           </div>
         </div>
