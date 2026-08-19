@@ -233,9 +233,9 @@ export default function ViewersPage() {
                   <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                     <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                     <th className="text-left px-3 py-1">Viewer</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Balance</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Reservado</th>
-                    <th className="text-center px-3 py-1 w-24">Patrimonio</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Disponible</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">En apuesta</th>
+                    <th className="text-center px-3 py-1 w-24">Total</th>
                   </tr>
                 </thead>
                 <tbody>
