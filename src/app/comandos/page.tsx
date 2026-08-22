@@ -150,6 +150,31 @@ export default function ComandosPage() {
         </div>
 
         <div className="border-t border-zinc-800 pt-5">
+          <h2 className="text-sm font-bold uppercase tracking-wide text-emerald-400 mb-3">Durante partidas normales (fuera de la Liga)</h2>
+          <p className="text-zinc-500 text-xs mb-3">
+            No está siempre abierta: la transmisión la activa a mano cuando arranca una partida suelta, fuera del
+            sorteo de la Liga, e indica si esa partida es de killer o de survivor.
+          </p>
+
+          <div>
+            <code className="text-amber-400 font-semibold">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+            <p className="text-zinc-400 text-sm mt-1">
+              Apuesta entre 5 y 100 puntos a cómo le va a ir en esa partida suelta: victoria, empate (solo si es de
+              killer) o derrota. No hace falta indicar killer o survivor — ya lo fija la transmisión al abrir la
+              predicción. Dura 5 minutos desde que se activa; el pago se confirma recién cuando la transmisión
+              carga el resultado real. Mismas reglas de pago que el resto: el doble de lo apostado más la parte
+              proporcional del pozo de los que fallaron si acierta, la apuesta perdida si no.
+            </p>
+            <p className="text-zinc-500 text-xs mt-1">
+              Ejemplo: <code className="text-amber-400">!prediccion win 50</code>. Si por algún motivo hay una
+              predicción de killer y otra de survivor abiertas al mismo tiempo, hay que aclarar cuál con{' '}
+              <code className="text-amber-400">!prediccion killer win 50</code> o{' '}
+              <code className="text-amber-400">!prediccion survivor win 50</code>.
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-zinc-800 pt-5">
           <h2 className="text-sm font-bold uppercase tracking-wide text-fuchsia-400 mb-3">En cualquier momento (chat general)</h2>
 
           <div className="mb-4">
