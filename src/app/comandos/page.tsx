@@ -230,7 +230,7 @@ export default function ComandosPage() {
           <div className="border-t border-zinc-800 pt-3">
             <span className="text-amber-400 font-semibold text-sm">Presencia activa</span>
             <p className="text-zinc-400 text-sm mt-1">
-              No hace falta ningún comando: por estar activo en el chat (mandar cualquier mensaje) se ganan +3
+              No hace falta ningún comando: por estar activo en el chat (mandar cualquier mensaje) se ganan +5
               puntos gratis cada 10 minutos. Es la forma más segura de recuperar puntos si una predicción, un
               duelo, un robo o la bomba dejaron el balance corto.
             </p>
