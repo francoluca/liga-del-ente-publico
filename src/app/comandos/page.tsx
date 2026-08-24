@@ -267,6 +267,13 @@ export default function ComandosPage() {
             </p>
           </div>
 
+          <div className="mb-4">
+            <code className="text-amber-400 font-semibold">!discord</code>
+            <p className="text-zinc-400 text-sm mt-1">
+              Responde con el link de invitación al servidor de Discord de la Liga del Ente.
+            </p>
+          </div>
+
           <div className="border-t border-zinc-800 pt-5 mt-1">
             <span className="text-amber-400 font-semibold text-sm">Tienda de puntos</span>
             <p className="text-zinc-400 text-sm mt-1 mb-4">
