@@ -268,14 +268,20 @@ export default function ComandosPage() {
             </p>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold">!reroll personaje</code>{' '}
-              <span className="text-zinc-500">·</span>{' '}
+              <code className="text-amber-400 font-semibold">!reroll personaje</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 150 puntos, vuelve a sortear el personaje de la próxima ruleta que gire. Se aplica
+                automáticamente en el próximo sorteo, no en el que ya está en pantalla. Hay que esperar 10 minutos
+                entre compras de reroll.
+              </p>
+            </div>
+
+            <div className="mb-4">
               <code className="text-amber-400 font-semibold">!reroll perks</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Compra un rerroleo para la próxima ruleta que gire: <code className="text-amber-400">personaje</code>{' '}
-                (150 puntos) vuelve a sortear el personaje, <code className="text-amber-400">perks</code> (100
-                puntos) vuelve a sortear las perks. Se aplica automáticamente en el próximo sorteo, no en el que ya
-                está en pantalla. Hay que esperar 10 minutos entre compras de reroll.
+                Por 100 puntos, vuelve a sortear las perks de la próxima ruleta que gire. Se aplica automáticamente
+                en el próximo sorteo, no en el que ya está en pantalla. Hay que esperar 10 minutos entre compras de
+                reroll.
               </p>
             </div>
 
