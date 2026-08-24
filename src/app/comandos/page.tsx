@@ -270,18 +270,22 @@ export default function ComandosPage() {
             <div className="mb-4">
               <code className="text-amber-400 font-semibold">!reroll personaje</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Por 150 puntos, vuelve a sortear el personaje de la próxima ruleta que gire. Se aplica
-                automáticamente en el próximo sorteo, no en el que ya está en pantalla. Hay que esperar 10 minutos
-                entre compras de reroll.
+                Por 150 puntos, vuelve a sortear el personaje que esté en pantalla en ese momento (Liga, playoffs
+                o partida normal, la ruleta que esté activa). Se aplica solo, sin que la transmisión tenga que
+                hacer nada, apenas unos segundos después de la compra — si ya había una predicción abierta para
+                ese personaje, se pierde junto con el sorteo. Si nadie está en medio de una ronda (el resultado
+                de la anterior ya se cargó y todavía no giró la próxima), queda en espera y se aplica apenas
+                arranca ese siguiente giro. Hay que esperar 10 minutos entre compras de reroll.
               </p>
             </div>
 
             <div className="mb-4">
               <code className="text-amber-400 font-semibold">!reroll perks</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Por 100 puntos, vuelve a sortear las perks de la próxima ruleta que gire. Se aplica automáticamente
-                en el próximo sorteo, no en el que ya está en pantalla. Hay que esperar 10 minutos entre compras de
-                reroll.
+                Por 100 puntos, igual que <code className="text-amber-400">!reroll personaje</code> pero solo
+                redibuja las 4 perks del personaje que está en pantalla, sin tocar el personaje ni la predicción
+                abierta. Si ambos rerolls están pendientes a la vez, el de personaje se aplica primero. Hay que
+                esperar 10 minutos entre compras de reroll.
               </p>
             </div>
 
