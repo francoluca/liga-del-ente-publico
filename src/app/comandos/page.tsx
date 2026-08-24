@@ -270,7 +270,7 @@ export default function ComandosPage() {
           <div className="mb-4">
             <code className="text-amber-400 font-semibold">!discord</code>
             <p className="text-zinc-400 text-sm mt-1">
-              Responde con el link de invitación al servidor de Discord de la Liga del Ente.
+              Responde con el link de invitación al servidor de Discord del canal.
             </p>
           </div>
 
