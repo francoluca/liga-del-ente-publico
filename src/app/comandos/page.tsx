@@ -318,8 +318,8 @@ export default function ComandosPage() {
                 intenta robar puede igual perder puntos por su cuenta, con la misma probabilidad de siempre — la
                 inmunidad no te vuelve un blanco más riesgoso para nadie), y si te toca sostener la{' '}
                 <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
-                36 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
-                menos 12 horas sin inmunidad entre una compra y la siguiente.
+                48 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
+                menos 24 horas sin inmunidad entre una compra y la siguiente.
               </p>
             </div>
           </div>
