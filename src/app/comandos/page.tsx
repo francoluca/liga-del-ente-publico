@@ -239,6 +239,12 @@ export default function ComandosPage() {
               balance, que pasa a la víctima como compensación. Después de cada intento (salga bien o mal) hay que
               esperar 10 minutos para volver a intentarlo.
             </p>
+            <p className="text-zinc-400 text-sm mt-1">
+              Si la víctima tiene <code className="text-amber-400">!inmunidad</code> activa, el robo nunca se
+              concreta, pero eso no te expone más de lo normal: se tira la misma probabilidad de siempre, y solo
+              perdés puntos si ese tiro te hubiera atrapado igual robándole a alguien sin inmunidad. Si el tiro te
+              daba éxito, el robo simplemente se bloquea y no pasa nada.
+            </p>
           </div>
 
           <div className="mb-4">
@@ -307,10 +313,13 @@ export default function ComandosPage() {
             <div>
               <code className="text-amber-400 font-semibold">!inmunidad</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, cualquier intento de{' '}
-                <code className="text-amber-400">!robar</code> en tu contra falla automáticamente (tratado como si
-                te hubieran atrapado), y si te toca sostener la <code className="text-amber-400">!bomba</code>{' '}
-                cuando explota, no perdés puntos.
+                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
+                <code className="text-amber-400">!robar</code> en tu contra puede concretarse (aunque el que
+                intenta robar puede igual perder puntos por su cuenta, con la misma probabilidad de siempre — la
+                inmunidad no te vuelve un blanco más riesgoso para nadie), y si te toca sostener la{' '}
+                <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
+                36 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
+                menos 12 horas sin inmunidad entre una compra y la siguiente.
               </p>
             </div>
           </div>
