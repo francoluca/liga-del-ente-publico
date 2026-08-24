@@ -69,6 +69,33 @@ export default function ComandosPage() {
         <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
       </div>
 
+      <div className="bg-zinc-900 border border-lime-900/60 rounded-lg p-4 my-8">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-lime-400 mb-3">Cómo se ganan los puntos</h2>
+
+        <div className="mb-4">
+          <span className="text-amber-400 font-semibold text-sm">Presencia activa</span>
+          <p className="text-zinc-400 text-sm mt-1">
+            No hace falta ningún comando: por estar activo en el chat (mandar cualquier mensaje) se ganan +5 puntos
+            gratis cada 10 minutos.
+          </p>
+        </div>
+
+        <div>
+          <span className="text-amber-400 font-semibold text-sm">Donaciones reales</span>
+          <p className="text-zinc-400 text-sm mt-1">
+            Los bits de Twitch, los Kicks de Kick y los regalos de TikTok se convierten en puntos automáticamente
+            apenas se registra la donación — no hace falta ningún comando. La conversión está calibrada para que
+            cada plataforma pague lo mismo por cada dólar real gastado (alrededor de 35 puntos por dólar), así que
+            no importa qué plataforma uses para apoyar el canal, el chat gana parejo:
+          </p>
+          <ul className="text-zinc-400 text-sm mt-2 space-y-0.5 list-disc list-inside">
+            <li>Bits (Twitch): ~0.58 puntos por bit</li>
+            <li>Kicks (Kick): ~0.37 puntos por Kick</li>
+            <li>Regalos de TikTok: ~0.88 puntos por diamante que recibe el streamer</li>
+          </ul>
+        </div>
+      </div>
+
       <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 my-8 space-y-7">
         <div>
           <h2 className="text-sm font-bold uppercase tracking-wide text-sky-400 mb-3">Durante las partidas de la Liga</h2>
@@ -178,6 +205,13 @@ export default function ComandosPage() {
           <h2 className="text-sm font-bold uppercase tracking-wide text-fuchsia-400 mb-3">En cualquier momento (chat general)</h2>
 
           <div className="mb-4">
+            <code className="text-amber-400 font-semibold">!puntos</code>
+            <p className="text-zinc-400 text-sm mt-1">
+              Responde en el chat con tu balance actual de puntos.
+            </p>
+          </div>
+
+          <div className="mb-4">
             <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Desafía a otro chatter a apostar entre 5 y 100 puntos, cara a cara. Esa persona tiene 2 minutos para
@@ -227,13 +261,46 @@ export default function ComandosPage() {
             </p>
           </div>
 
-          <div className="border-t border-zinc-800 pt-3">
-            <span className="text-amber-400 font-semibold text-sm">Presencia activa</span>
-            <p className="text-zinc-400 text-sm mt-1">
-              No hace falta ningún comando: por estar activo en el chat (mandar cualquier mensaje) se ganan +5
-              puntos gratis cada 10 minutos. Es la forma más segura de recuperar puntos si una predicción, un
-              duelo, un robo o la bomba dejaron el balance corto.
+          <div className="border-t border-zinc-800 pt-5 mt-1">
+            <span className="text-amber-400 font-semibold text-sm">Tienda de puntos</span>
+            <p className="text-zinc-400 text-sm mt-1 mb-4">
+              Gastá tus puntos en ventajas para la próxima ruleta de la Liga u otros beneficios.
             </p>
+
+            <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!reroll personaje</code>{' '}
+              <span className="text-zinc-500">·</span>{' '}
+              <code className="text-amber-400 font-semibold">!reroll perks</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Compra un rerroleo para la próxima ruleta que gire: <code className="text-amber-400">personaje</code>{' '}
+                (150 puntos) vuelve a sortear el personaje, <code className="text-amber-400">perks</code> (100
+                puntos) vuelve a sortear las perks. Se aplica automáticamente en el próximo sorteo, no en el que ya
+                está en pantalla. Hay que esperar 10 minutos entre compras de reroll.
+              </p>
+            </div>
+
+            <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!potenciar &lt;perk&gt;</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 150 puntos, potencia una perk especial por 48 horas, aumentando sus chances de salir sorteada en
+                ese lapso. Las opciones son: <code className="text-amber-400">me da igual</code>,{' '}
+                <code className="text-amber-400">objeto de obsesion</code> y{' '}
+                <code className="text-amber-400">vacio</code>.
+              </p>
+              <p className="text-zinc-500 text-xs mt-1">
+                Ejemplo: <code className="text-amber-400">!potenciar objeto de obsesion</code>
+              </p>
+            </div>
+
+            <div>
+              <code className="text-amber-400 font-semibold">!inmunidad</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, cualquier intento de{' '}
+                <code className="text-amber-400">!robar</code> en tu contra falla automáticamente (tratado como si
+                te hubieran atrapado), y si te toca sostener la <code className="text-amber-400">!bomba</code>{' '}
+                cuando explota, no perdés puntos.
+              </p>
+            </div>
           </div>
         </div>
       </div>
