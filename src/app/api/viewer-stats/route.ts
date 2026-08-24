@@ -27,6 +27,12 @@ interface ViewerStatRow {
   bombs_exploded_on: number;
   points_lost_to_bombs: number;
   points_gained_from_bombs: number;
+  total_redemptions: number;
+  total_redemption_spend: number;
+  reroll_character_count: number;
+  reroll_perk_count: number;
+  perk_boost_count: number;
+  immunity_count: number;
 }
 
 interface ViewerStat {
@@ -57,6 +63,12 @@ interface ViewerStat {
   pointsLostToBombs: number;
   pointsGainedFromBombs: number;
   pvpNet: number;
+  totalRedemptions: number;
+  totalRedemptionSpend: number;
+  rerollCharacterCount: number;
+  rerollPerkCount: number;
+  perkBoostCount: number;
+  immunityCount: number;
 }
 
 const MIN_QUALIFYING = 5;
@@ -127,6 +139,17 @@ const STATS_SQL = `
     JOIN bomb_rounds br ON br.id = bh.round_id AND br.status = 'exploded'
     WHERE bh.voter_key != br.holder_key
     GROUP BY bh.voter_key
+  ),
+  redemption_stats AS (
+    SELECT voter_key,
+      COUNT(*) AS total_redemptions,
+      SUM(cost) AS total_redemption_spend,
+      SUM(CASE WHEN item_key = 'reroll_character' THEN 1 ELSE 0 END) AS reroll_character_count,
+      SUM(CASE WHEN item_key = 'reroll_perk' THEN 1 ELSE 0 END) AS reroll_perk_count,
+      SUM(CASE WHEN item_key = 'perk_boost' THEN 1 ELSE 0 END) AS perk_boost_count,
+      SUM(CASE WHEN item_key = 'immunity' THEN 1 ELSE 0 END) AS immunity_count
+    FROM redemptions
+    GROUP BY voter_key
   )
   SELECT
     cp.voter_key,
@@ -153,13 +176,20 @@ const STATS_SQL = `
     COALESCE(bsv.bombs_survived, 0) AS bombs_survived,
     COALESCE(bl.bombs_exploded_on, 0) AS bombs_exploded_on,
     COALESCE(bl.points_lost_to_bombs, 0) AS points_lost_to_bombs,
-    COALESCE(bsv.points_gained_from_bombs, 0) AS points_gained_from_bombs
+    COALESCE(bsv.points_gained_from_bombs, 0) AS points_gained_from_bombs,
+    COALESCE(rds.total_redemptions, 0) AS total_redemptions,
+    COALESCE(rds.total_redemption_spend, 0) AS total_redemption_spend,
+    COALESCE(rds.reroll_character_count, 0) AS reroll_character_count,
+    COALESCE(rds.reroll_perk_count, 0) AS reroll_perk_count,
+    COALESCE(rds.perk_boost_count, 0) AS perk_boost_count,
+    COALESCE(rds.immunity_count, 0) AS immunity_count
   FROM chatter_points cp
   LEFT JOIN pred_stats ps ON ps.voter_key = cp.voter_key
   LEFT JOIN duel_stats ds ON ds.voter_key = cp.voter_key
   LEFT JOIN robbery_stats rs ON rs.voter_key = cp.voter_key
   LEFT JOIN bomb_loss bl ON bl.voter_key = cp.voter_key
   LEFT JOIN bomb_survive bsv ON bsv.voter_key = cp.voter_key
+  LEFT JOIN redemption_stats rds ON rds.voter_key = cp.voter_key
   ORDER BY net_worth DESC
 `;
 
@@ -195,6 +225,12 @@ export async function GET() {
       pointsLostToBombs: r.points_lost_to_bombs,
       pointsGainedFromBombs: r.points_gained_from_bombs,
       pvpNet: r.duels_net + r.robbery_net + (r.points_gained_from_bombs - r.points_lost_to_bombs),
+      totalRedemptions: r.total_redemptions,
+      totalRedemptionSpend: r.total_redemption_spend,
+      rerollCharacterCount: r.reroll_character_count,
+      rerollPerkCount: r.reroll_perk_count,
+      perkBoostCount: r.perk_boost_count,
+      immunityCount: r.immunity_count,
     }));
 
     const topBalance = leaderboard[0] ?? null;

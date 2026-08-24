@@ -30,6 +30,12 @@ interface ViewerStat {
   pointsLostToBombs: number;
   pointsGainedFromBombs: number;
   pvpNet: number;
+  totalRedemptions: number;
+  totalRedemptionSpend: number;
+  rerollCharacterCount: number;
+  rerollPerkCount: number;
+  perkBoostCount: number;
+  immunityCount: number;
 }
 
 interface ViewerStatsData {
@@ -174,7 +180,7 @@ function bombNet(v: ViewerStat): number {
   return v.pointsGainedFromBombs - v.pointsLostToBombs;
 }
 
-type Tab = 'general' | 'predicciones' | 'duelos' | 'robos' | 'bombas';
+type Tab = 'general' | 'predicciones' | 'duelos' | 'robos' | 'bombas' | 'canjeadores';
 
 const TABS: { key: Tab; label: string }[] = [
   { key: 'general', label: 'General' },
@@ -182,6 +188,7 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'duelos', label: 'Duelos' },
   { key: 'robos', label: 'Robos' },
   { key: 'bombas', label: 'Bombas' },
+  { key: 'canjeadores', label: 'Canjeadores' },
 ];
 
 export default function ViewersPage() {
@@ -534,6 +541,74 @@ export default function ViewersPage() {
                       ))}
                   </tbody>
                 </table>
+              </div>
+            </>
+          )}
+
+          {tab === 'canjeadores' && (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.totalRedemptionSpend > 0, (v) => v.totalRedemptionSpend);
+                  return (
+                    <HighlightCard
+                      title="Mayor gastador en la tienda"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].totalRedemptionSpend} pts` : '—'}
+                      tone="amber"
+                    />
+                  );
+                })()}
+                {(() => {
+                  const leaders = topLeaders(data.leaderboard, (v) => v.totalRedemptions > 0, (v) => v.totalRedemptions);
+                  return (
+                    <HighlightCard
+                      title="Más canjes totales"
+                      leaders={leaders}
+                      valueLabel={leaders.length > 0 ? `${leaders[0].totalRedemptions} canjes` : '—'}
+                      tone="green"
+                    />
+                  );
+                })()}
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full sm:min-w-[760px] table-fixed text-sm border-separate border-spacing-y-1.5">
+                  <thead>
+                    <tr className="text-zinc-500 text-xs uppercase tracking-wider">
+                      <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
+                      <th className="text-left px-3 py-1">Viewer</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Reroll personaje</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Reroll perk</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Potenciar</th>
+                      <th className="hidden sm:table-cell text-center px-2 py-1 w-20">Inmunidad</th>
+                      <th className="text-center px-3 py-1 w-24">Gastado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[...data.leaderboard]
+                      .filter((v) => v.totalRedemptions > 0)
+                      .sort((a, b) => b.totalRedemptionSpend - a.totalRedemptionSpend)
+                      .map((v, i) => (
+                        <tr key={v.voterKey} className="bg-zinc-900/50">
+                          <td className="px-3 py-2 text-zinc-500 font-mono font-bold text-center rounded-l-lg">{i + 1}</td>
+                          <td className="px-3 py-2 overflow-hidden">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <ViewerIdentity v={v} />
+                            </div>
+                          </td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.rerollCharacterCount}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.rerollPerkCount}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.perkBoostCount}</td>
+                          <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.immunityCount}</td>
+                          <td className="text-center px-3 py-2 font-mono text-amber-400 font-black rounded-r-lg">{v.totalRedemptionSpend}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                {data.leaderboard.every((v) => v.totalRedemptions === 0) && (
+                  <div className="text-zinc-600 italic text-sm mt-2">Todavía nadie canjeó nada en la tienda.</div>
+                )}
               </div>
             </>
           )}
