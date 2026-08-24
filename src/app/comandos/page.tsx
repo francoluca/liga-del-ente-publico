@@ -275,9 +275,9 @@ export default function ComandosPage() {
                 hacer nada, apenas unos segundos después de la compra — si ya había una predicción abierta para
                 ese personaje, se pierde junto con el sorteo. Si nadie está en medio de una ronda (el resultado
                 de la anterior ya se cargó y todavía no giró la próxima), queda en espera y se aplica apenas
-                arranca ese siguiente giro. En partida normal (fuera de la Liga) el overlay se oculta 1 minuto
-                después de revelarse la 4ª perk, y a partir de ahí ya no se aceptan más rerolls para ese build.
-                Hay que esperar 10 minutos entre compras de reroll.
+                arranca ese siguiente giro. En cualquier modalidad (Liga, playoffs o partida normal) hay 1 minuto
+                de margen desde que se revela la 4ª perk para usar el reroll — pasado ese minuto ya no se acepta,
+                aunque el personaje siga en pantalla. Hay que esperar 10 minutos entre compras de reroll.
               </p>
             </div>
 
