@@ -40,11 +40,11 @@ export const SEASON_DISTRIBUTIONS: Record<CharacterType, Record<Division, {
     Oro: { total: 10, ascend: 3, descend: 3, playOff: 0 },
     Plata: { total: 10, ascend: 3, descend: 3, playOff: 0 },
     Bronce: { total: 7, ascend: 3, descend: 3, playOff: 0 },
-    Ceniza: { total: 6, ascend: 3, descend: 0, playOff: 0 },
+    Ceniza: { total: 7, ascend: 3, descend: 0, playOff: 0 },
   },
   survivor: {
     Iridiscente: { total: 10, ascend: 0, descend: 3, playOff: 4 },
-    Oro: { total: 10, ascend: 3, descend: 3, playOff: 0 },
+    Oro: { total: 11, ascend: 3, descend: 3, playOff: 0 },
     Plata: { total: 11, ascend: 3, descend: 3, playOff: 0 },
     Bronce: { total: 11, ascend: 3, descend: 3, playOff: 0 },
     Ceniza: { total: 11, ascend: 3, descend: 0, playOff: 0 },
@@ -52,8 +52,8 @@ export const SEASON_DISTRIBUTIONS: Record<CharacterType, Record<Division, {
 };
 
 export const DIVISION_LIMITS: Record<CharacterType, Record<Division, number>> = {
-  killer: { Iridiscente: 10, Oro: 10, Plata: 10, Bronce: 7, Ceniza: 6 },
-  survivor: { Iridiscente: 10, Oro: 10, Plata: 11, Bronce: 11, Ceniza: 11 }
+  killer: { Iridiscente: 10, Oro: 10, Plata: 10, Bronce: 7, Ceniza: 7 },
+  survivor: { Iridiscente: 10, Oro: 11, Plata: 11, Bronce: 11, Ceniza: 11 }
 };
 
 export const killers: Omit<CharacterData, 'type' | 'division'>[] = [
@@ -69,7 +69,7 @@ export const killers: Omit<CharacterData, 'type' | 'division'>[] = [
   { id: 10, name: 'Vecna', image: 'img/vecna.webp', expertPerks: ['mente_colmena', 'proyecto_secreto', 'retrocede_el_tiempo'], metaBuild: ['agitacion', 'apreton_de_hierro', 'conciencia_de_estar_despiertos', 'ruina'] },
   { id: 11, name: 'Krasue', image: 'img/krasue.webp', expertPerks: ['obertura_de_la_perdicion', 'ojo_errante', 'voracidad'], metaBuild: ['mente_colmena', 'dolor_resonante', 'ruina', 'la_emocion_de_la_caza'] },
   { id: 12, name: 'Chucky', image: 'img/chucky.webp', expertPerks: ['amigos_hasta_el_fin', 'baterias_incluidas', 'yo_tambien_puedo_jugar'], metaBuild: ['enfurecimiento', 'dolor_resonante', 'erupcion', 'abrazo_de_la_muerte'] },
-  { id: 13, name: 'El Oni', image: 'img/oni.webp', expertPerks: ['eco_de_sangre', 'némesis', 'tacticas_zanshin'], metaBuild: ['perseguidor_letal', 'terror_contagioso', 'miedo_fantasmal', 'duda_forzada'] },
+  { id: 13, name: 'El Oni', image: 'img/oni.webp', expertPerks: ['eco_de_sangre', 'nemesis', 'tacticas_zanshin'], metaBuild: ['perseguidor_letal', 'terror_contagioso', 'miedo_fantasmal', 'duda_forzada'] },
   { id: 14, name: 'Freddy Krueger', image: 'img/freddy.webp', expertPerks: ['enfurecimiento', 'guardian_de_sangre', 'recuerdame'], metaBuild: ['unidos_por_siempre', 'fuerza_brutal', 'pim_pam_pum', 'erupcion'] },
   { id: 15, name: 'La Artista', image: 'img/artist.webp', expertPerks: ['abrazo_de_la_muerte', 'dolor_resonante', 'arrepentimiento'], metaBuild: ['interruptor_de_hombre_muerto', 'parrillada_y_chile', 'aprendizaje_automatizado', 'pim_pam_pum'] },
   { id: 16, name: 'Wesker', image: 'img/wesker.webp', expertPerks: ['anatomia_superior', 'conciencia_de_estar_despiertos', 'terminal'], metaBuild: ['agitacion', 'coulrofobia', 'dolor_resonante', 'erupcion'] },
@@ -100,6 +100,7 @@ export const killers: Omit<CharacterData, 'type' | 'division'>[] = [
   { id: 41, name: 'Ghost Face', image: 'img/ghostface.webp', expertPerks: ['persecucion_furtiva', 'soy_todo_oidos', 'temblores_trepidantes'], metaBuild: ['control_del_publico', 'devoradora_de_esperanza', 'tierra_embrujada', 'inmortal'] },
   { id: 42, name: 'El Trampero', image: 'img/trapper.webp', expertPerks: ['agitacion', 'fuerza_brutal', 'presencia_perturbadora'], metaBuild: ['intervencion_corrupta', 'dolor_resonante', 'retrocede_el_tiempo', 'enfurecimiento'] },
   { id: 43, name: 'Jason', image: 'img/jason.webp', expertPerks: ['sombra_silenciosa', 'matanza', 'terror_hasta_la_muerte'], metaBuild: ['intervencion_corrupta', 'dolor_resonante', 'retrocede_el_tiempo', 'enfurecimiento'] },
+  { id: 44, name: 'El Juicio', image: 'img/juicio.webp', expertPerks: ['testigo_celestial', 'bajo_el_yugo', 'devastacion'], metaBuild: ['nadie_escapa_de_la_muerte', 'la_emocion_de_la_caza', 'apreton_de_hierro', 'espias_de_las_sombras'] },
 ];
 
 export const survivors: Omit<CharacterData, 'type' | 'division'>[] = [
@@ -156,6 +157,7 @@ export const survivors: Omit<CharacterData, 'type' | 'division'>[] = [
   { id: 151, name: 'Eleven', image: 'img/eleven.png', expertPerks: ['percepcion_extrasensorial', 'te_vemos', 'tono_gentil'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
   { id: 152, name: 'Kwon Tae-Young', image: 'img/kwon.png', expertPerks: ['estado_de_flujo', 'un_lugar_para_nosotros', 'cinco_movimientos_adelante'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
   { id: 153, name: 'Shane Wiigwaas', image: 'img/shane.webp', expertPerks: ['maxima_velocidad', 'interrogatorio', 'echar_una_mano'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
+  { id: 154, name: 'Aurora Stardotter', image: 'img/aurora.webp', expertPerks: ['cosechas_lo_que_siembras', 'grito_de_salvacion', 'determinacion'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
 ];
 
 // Vote/draw target representing "leave this slot empty" - not a real perk
