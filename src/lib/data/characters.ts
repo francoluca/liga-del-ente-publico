@@ -36,18 +36,18 @@ export const SEASON_DISTRIBUTIONS: Record<CharacterType, Record<Division, {
   playOff: number;
 }>> = {
   killer: {
-    Iridiscente: { total: 10, ascend: 0, descend: 3, playOff: 4 },
-    Oro: { total: 10, ascend: 3, descend: 3, playOff: 0 },
-    Plata: { total: 10, ascend: 3, descend: 3, playOff: 0 },
+    Iridiscente: { total: 10, ascend: 0, descend: 4, playOff: 4 },
+    Oro: { total: 10, ascend: 4, descend: 4, playOff: 0 },
+    Plata: { total: 10, ascend: 4, descend: 3, playOff: 0 },
     Bronce: { total: 7, ascend: 3, descend: 3, playOff: 0 },
     Ceniza: { total: 7, ascend: 3, descend: 0, playOff: 0 },
   },
   survivor: {
-    Iridiscente: { total: 10, ascend: 0, descend: 3, playOff: 4 },
-    Oro: { total: 11, ascend: 3, descend: 3, playOff: 0 },
-    Plata: { total: 11, ascend: 3, descend: 3, playOff: 0 },
-    Bronce: { total: 11, ascend: 3, descend: 3, playOff: 0 },
-    Ceniza: { total: 11, ascend: 3, descend: 0, playOff: 0 },
+    Iridiscente: { total: 10, ascend: 0, descend: 4, playOff: 4 },
+    Oro: { total: 11, ascend: 4, descend: 4, playOff: 0 },
+    Plata: { total: 11, ascend: 4, descend: 4, playOff: 0 },
+    Bronce: { total: 11, ascend: 4, descend: 4, playOff: 0 },
+    Ceniza: { total: 11, ascend: 4, descend: 0, playOff: 0 },
   },
 };
 
