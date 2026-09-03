@@ -29,7 +29,7 @@ export default function HomePage() {
     >
       <div className="absolute inset-0 bg-zinc-950/50" />
       <div className="max-w-4xl w-full relative z-10">
-        <div className="bg-zinc-950/70 backdrop-blur-sm rounded-2xl px-6 py-8 mb-20">
+        <div className="bg-zinc-950/70 backdrop-blur-sm rounded-2xl px-6 py-6 mb-36">
           <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">Bienvenido al canal de Franluca</h1>
           <p className="text-zinc-300 text-center max-w-2xl mx-auto mb-2">
             Donde encontrarás streams de Dead by Daylight y algo más. Podrás ser parte de la comunidad
