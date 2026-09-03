@@ -235,7 +235,7 @@ export default function ComandosPage() {
             <p className="text-zinc-400 text-sm mt-1">
               Intenta robarle puntos a otro chatter que tenga al menos 50 puntos de balance. Usa la misma lógica de
               probabilidad que el duelo (entre 15% y 85%, según el patrimonio de cada uno). Si sale bien, se roba
-              el 15% del balance de la víctima. Si lo atrapan, quien intentó robar pierde el 10% de su propio
+              el 10% del balance de la víctima. Si lo atrapan, quien intentó robar pierde el 10% de su propio
               balance, que pasa a la víctima como compensación. Después de cada intento (salga bien o mal) hay que
               esperar 10 minutos para volver a intentarlo.
             </p>
