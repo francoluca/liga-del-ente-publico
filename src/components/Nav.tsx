@@ -6,11 +6,12 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const links = [
-  { href: '/posiciones', label: 'Posiciones' },
-  { href: '/historial', label: 'Historial' },
+  { href: '/posiciones', label: 'Liga del Ente' },
   { href: '/comandos', label: 'Comandos' },
   { href: '/viewers', label: 'Ranking del Chat' },
 ];
+
+const sectionRoutes = ['/posiciones', '/historial'];
 
 export default function Nav() {
   const pathname = usePathname();
@@ -29,7 +30,7 @@ export default function Nav() {
 
         <div className="hidden sm:flex items-center gap-1">
           {links.map((l) => {
-            const active = pathname === l.href;
+            const active = l.href === '/posiciones' ? sectionRoutes.includes(pathname) : pathname === l.href;
             return (
               <Link
                 key={l.href}
@@ -64,7 +65,7 @@ export default function Nav() {
       {open && (
         <div className="sm:hidden border-t border-zinc-800 bg-zinc-950 px-6 py-3 flex flex-col gap-1">
           {links.map((l) => {
-            const active = pathname === l.href;
+            const active = l.href === '/posiciones' ? sectionRoutes.includes(pathname) : pathname === l.href;
             return (
               <Link
                 key={l.href}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { DIVISION_ORDER, SEASON_DISTRIBUTIONS, type Division, type CharacterType } from '@/lib/data/characters';
+import LigaDelEnteTabs from '@/components/LigaDelEnteTabs';
 
 interface Character {
   id: number;
@@ -94,9 +95,11 @@ export default function PosicionesPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-6xl mx-auto">
       <div className="mb-1">
-        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Tabla de posiciones</h1>
-        <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Liga del Ente</h1>
+        <p className="text-zinc-400">Dead by Daylight</p>
       </div>
+
+      <LigaDelEnteTabs />
 
       <div className="flex gap-2 my-8">
         <button

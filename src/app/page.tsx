@@ -3,15 +3,9 @@ import Link from 'next/link';
 const links = [
   {
     href: '/posiciones',
-    title: 'Tabla de posiciones',
-    description: 'Rankings por división, ascensos, descensos y playoff — en vivo.',
+    title: 'Liga del Ente',
+    description: 'Tabla de posiciones en vivo, ascensos y descensos, más historial, rachas y récords.',
     color: 'border-amber-700/50 hover:border-amber-500',
-  },
-  {
-    href: '/historial',
-    title: 'Historial y récords',
-    description: 'Rachas, líderes de PL, Hall of Fame y el historial de cada personaje.',
-    color: 'border-green-700/50 hover:border-green-500',
   },
   {
     href: '/comandos',
@@ -31,10 +25,16 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-6">
       <div className="max-w-4xl w-full">
-        <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-2">Liga Del Ente</h1>
-        <p className="text-zinc-400 text-center mb-10">Todo lo que el espectador puede consultar, en un solo lugar.</p>
+        <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">El canal de Franco</h1>
+        <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-2">
+          Streams de Dead by Daylight y algo más, con la comunidad participando en vivo desde el chat.
+        </p>
+        <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-10">
+          Acá vas a encontrar todo lo que el espectador puede consultar sobre el canal: la liga entre
+          personajes, cómo votar desde el chat y el ranking de quienes predicen las partidas.
+        </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {links.map((l) => (
             <Link
               key={l.href}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { type CharacterType } from '@/lib/data/characters';
+import LigaDelEnteTabs from '@/components/LigaDelEnteTabs';
 
 interface LeaderEntry {
   id: number;
@@ -129,9 +130,11 @@ export default function HistorialPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 px-6 lg:px-10 py-10 max-w-7xl mx-auto">
       <div className="mb-1">
-        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Historial y récords</h1>
-        <p className="text-zinc-400">Liga Del Ente — Dead by Daylight</p>
+        <h1 className="text-3xl font-bold uppercase tracking-wide mb-1">Liga del Ente</h1>
+        <p className="text-zinc-400">Dead by Daylight</p>
       </div>
+
+      <LigaDelEnteTabs />
 
       <div className="flex gap-2 my-8">
         <button
