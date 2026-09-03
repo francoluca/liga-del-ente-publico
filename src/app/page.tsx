@@ -25,13 +25,14 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-6">
       <div className="max-w-4xl w-full">
-        <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">El canal de Franco</h1>
+        <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">Bienvenido al canal de Franluca</h1>
         <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-2">
-          Streams de Dead by Daylight y algo más, con la comunidad participando en vivo desde el chat.
+          Donde encontrarás streams de Dead by Daylight y algo más. Podrás ser parte de la comunidad
+          participando en vivo desde el chat.
         </p>
         <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-10">
-          Acá vas a encontrar todo lo que el espectador puede consultar sobre el canal: la liga entre
-          personajes, cómo votar desde el chat y el ranking de quienes predicen las partidas.
+          Acá vas a encontrar todo lo que el espectador puede consultar sobre el canal: la liga del ente
+          entre personajes, los comandos que puedes usar en el chat y el ranking del chat.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
