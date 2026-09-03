@@ -10,7 +10,7 @@ const links = [
   {
     href: '/comandos',
     title: 'Comandos del chat',
-    description: 'Todos los nombres exactos para votar con !favorito y !perk.',
+    description: 'Todos los comandos que puedes usar en el chat.',
     color: 'border-red-700/50 hover:border-red-500',
   },
   {
