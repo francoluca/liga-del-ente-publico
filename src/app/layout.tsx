@@ -3,7 +3,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "Liga Del Ente",
+  title: "franluca",
   description: "Comandos, posiciones e historial de Liga Del Ente",
 };
 
