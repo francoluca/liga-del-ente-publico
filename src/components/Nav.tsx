@@ -24,7 +24,7 @@ export default function Nav() {
           className="flex items-center hover:opacity-80 transition-opacity"
           onClick={() => setOpen(false)}
         >
-          <Image src="/img/logo_liga_ente.png" alt="Liga Del Ente" width={160} height={48} unoptimized className="h-10 w-auto object-contain" />
+          <Image src="/img/franco_avatar.png" alt="Liga Del Ente" width={48} height={48} unoptimized className="h-10 w-10 rounded-full object-cover" />
         </Link>
 
         <div className="hidden sm:flex items-center gap-1">
