@@ -23,8 +23,12 @@ const links = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center px-6">
-      <div className="max-w-4xl w-full">
+    <main
+      className="min-h-screen text-zinc-100 flex items-center justify-center px-6 bg-zinc-950 bg-cover bg-center bg-no-repeat relative"
+      style={{ backgroundImage: "url('/img/fondoWeb.png')" }}
+    >
+      <div className="absolute inset-0 bg-zinc-950/70" />
+      <div className="max-w-4xl w-full relative z-10">
         <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">Bienvenido al canal de Franluca</h1>
         <p className="text-zinc-400 text-center max-w-2xl mx-auto mb-2">
           Donde encontrarás streams de Dead by Daylight y algo más. Podrás ser parte de la comunidad
