@@ -80,7 +80,7 @@ export default function HomePage() {
     >
       <div className="absolute inset-0 bg-zinc-950/50" />
       <div className="max-w-4xl w-full relative z-10">
-        <div className="bg-zinc-900/70 rounded-2xl px-6 py-6 mb-36">
+        <div className="bg-zinc-900/70 rounded-2xl px-6 py-6 mb-20">
           <h1 className="text-4xl font-bold uppercase tracking-wide text-center mb-4">Bienvenido al canal de Franluca</h1>
           <p className="text-zinc-300 text-center max-w-2xl mx-auto mb-2">
             Donde encontrarás streams de Dead by Daylight y algo más. Podrás ser parte de la comunidad
@@ -92,7 +92,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        <div className="flex items-center justify-center gap-5 mb-10">
+        <div className="flex items-center justify-center gap-4 mb-6">
           {socials.map((s) => (
             <a
               key={s.name}
@@ -103,7 +103,7 @@ export default function HomePage() {
               title={s.name}
               className={`text-zinc-400 transition-colors ${s.color}`}
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
                 {s.icon}
               </svg>
             </a>
