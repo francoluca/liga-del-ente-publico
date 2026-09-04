@@ -42,7 +42,7 @@ const socials = [
     ),
   },
   {
-    href: 'https://discord.gg/RYJjPVA9KG',
+    href: 'https://discord.gg/XafDWagWzX',
     name: 'Discord',
     color: 'hover:text-[#5865F2]',
     icon: (
