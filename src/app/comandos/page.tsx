@@ -124,16 +124,17 @@ export default function ComandosPage() {
           </div>
 
           <div>
-            <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
+            <code className="text-amber-400 font-semibold">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
-              Apuesta entre 5 y 100 puntos a cómo le va a ir al personaje que acaba de salir sorteado: victoria,
-              empate o derrota. La apuesta se abre sola apenas sale el personaje y dura 5 minutos. Si el resultado
-              acierta, se paga el doble de lo apostado más la parte proporcional de los puntos de todos los que
-              fallaron. Si no acierta, se pierde lo apostado — sin excepción, ni siquiera si nadie del chat acertó
-              esa ronda.
+              Apuesta puntos a cómo le va a ir al personaje que acaba de salir sorteado: victoria, empate o
+              derrota. La apuesta se abre sola apenas sale el personaje y dura 5 minutos. No hace falta indicar el
+              personaje ni si es killer o survivor: siempre apuesta directo a la predicción que esté abierta en ese
+              momento. Si el resultado acierta, se paga el doble de lo apostado más la parte proporcional de los
+              puntos de todos los que fallaron. Si no acierta, se pierde lo apostado — sin excepción, ni siquiera
+              si nadie del chat acertó esa ronda.
             </p>
             <p className="text-zinc-500 text-xs mt-1">
-              Ejemplo: <code className="text-amber-400">!prediccion killer win 100</code>. Consulta el balance y
+              Ejemplo: <code className="text-amber-400">!prediccion win 100</code>. Consulta el balance y
               los aciertos de cada chatter en{' '}
               <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">Ranking del chat</Link>.
             </p>
@@ -142,63 +143,22 @@ export default function ComandosPage() {
 
         <div className="border-t border-zinc-800 pt-5">
           <h2 className="text-sm font-bold uppercase tracking-wide text-violet-400 mb-3">Durante los Playoffs</h2>
-          <p className="text-zinc-500 text-xs mb-3">
-            Ninguna de las dos predicciones está siempre abierta: la transmisión las activa a mano desde el panel
-            de playoffs cuando corresponde.
+          <p className="text-zinc-400 text-sm">
+            Para cada partida puntual de un cruce (Juego 1, Juego 2) se usa exactamente el mismo{' '}
+            <code className="text-amber-400">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code> de arriba. No
+            está siempre abierta: la transmisión la activa a mano desde el panel de playoffs cuando arranca esa
+            partida específica, y dura 5 minutos.
           </p>
-
-          <div className="mb-4">
-            <code className="text-amber-400 font-semibold">!prediccionduelo &lt;personaje&gt; &lt;monto&gt;</code>
-            <p className="text-zinc-400 text-sm mt-1">
-              Apuesta entre 5 y 100 puntos a quién se queda con un cruce completo (semifinal o final), que se juega
-              a mejor de 2 partidas. El ganador del cruce no es simplemente quien gane más partidas sueltas, sino
-              quien sume más puntos de liga (PL) entre sus 2 juegos. Hay hasta 10 minutos desde que la transmisión
-              abre la predicción. Mismas reglas de pago que <code className="text-amber-400">!prediccion</code>:
-              el doble de lo apostado más la parte del pozo de los que fallaron si acierta, la apuesta perdida si no.
-            </p>
-            <p className="text-zinc-500 text-xs mt-1">
-              Ejemplo: <code className="text-amber-400">!prediccionduelo huntress 50</code> — no hace falta indicar
-              killer o survivor, se detecta solo con el nombre del personaje.
-            </p>
-          </div>
-
-          <div>
-            <code className="text-amber-400 font-semibold">!prediccionpartida &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
-            <p className="text-zinc-400 text-sm mt-1">
-              Es la versión playoff de <code className="text-amber-400">!prediccion</code>: apuesta al resultado
-              (victoria, empate o derrota) de una sola partida puntual dentro de un cruce, no del cruce entero.
-              Se abre por 5 minutos cuando la transmisión la activa para esa partida específica.
-            </p>
-            <p className="text-zinc-500 text-xs mt-1">
-              Ejemplo: <code className="text-amber-400">!prediccionpartida huntress win 50</code> — tampoco hace
-              falta indicar killer o survivor acá.
-            </p>
-          </div>
         </div>
 
         <div className="border-t border-zinc-800 pt-5">
           <h2 className="text-sm font-bold uppercase tracking-wide text-emerald-400 mb-3">Durante partidas normales (fuera de la Liga)</h2>
-          <p className="text-zinc-500 text-xs mb-3">
+          <p className="text-zinc-400 text-sm">
+            También el mismo <code className="text-amber-400">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code>.
             No está siempre abierta: la transmisión la activa a mano cuando arranca una partida suelta, fuera del
-            sorteo de la Liga, e indica si esa partida es de killer o de survivor.
+            sorteo de la Liga. Dura 5 minutos desde que se activa; el pago se confirma recién cuando la transmisión
+            carga el resultado real.
           </p>
-
-          <div>
-            <code className="text-amber-400 font-semibold">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code>
-            <p className="text-zinc-400 text-sm mt-1">
-              Apuesta entre 5 y 100 puntos a cómo le va a ir en esa partida suelta: victoria, empate (solo si es de
-              killer) o derrota. No hace falta indicar killer o survivor — ya lo fija la transmisión al abrir la
-              predicción. Dura 5 minutos desde que se activa; el pago se confirma recién cuando la transmisión
-              carga el resultado real. Mismas reglas de pago que el resto: el doble de lo apostado más la parte
-              proporcional del pozo de los que fallaron si acierta, la apuesta perdida si no.
-            </p>
-            <p className="text-zinc-500 text-xs mt-1">
-              Ejemplo: <code className="text-amber-400">!prediccion win 50</code>. Si por algún motivo hay una
-              predicción de killer y otra de survivor abiertas al mismo tiempo, hay que aclarar cuál con{' '}
-              <code className="text-amber-400">!prediccion killer win 50</code> o{' '}
-              <code className="text-amber-400">!prediccion survivor win 50</code>.
-            </p>
-          </div>
         </div>
 
         <div className="border-t border-zinc-800 pt-5">
