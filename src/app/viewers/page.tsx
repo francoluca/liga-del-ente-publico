@@ -243,9 +243,9 @@ export default function ViewersPage() {
                     <th className="text-left px-3 py-1">Viewer</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Disponible</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-24">En apuesta</th>
-                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Total</th>
-                    <th className="text-center px-3 py-1 w-24" title="Balance + apostado + todo lo gastado en la tienda de puntos - canjear no te hace bajar de puesto.">
-                      De por vida
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Canjeados</th>
+                    <th className="text-center px-3 py-1 w-24" title="Disponible + en apuesta + canjeados - canjear en la tienda de puntos no te hace bajar de puesto.">
+                      Total
                     </th>
                   </tr>
                 </thead>
@@ -260,7 +260,7 @@ export default function ViewersPage() {
                       </td>
                       <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.balance}</td>
                       <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.reserved}</td>
-                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.netWorth}</td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.totalRedemptionSpend}</td>
                       <td className="text-center px-3 py-2 font-mono text-yellow-300 font-black rounded-r-lg">{v.lifetimePoints}</td>
                     </tr>
                   ))}
