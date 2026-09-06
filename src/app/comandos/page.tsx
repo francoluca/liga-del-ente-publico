@@ -88,38 +88,11 @@ export default function ComandosPage() {
             cada plataforma pague lo mismo por cada dólar real gastado (alrededor de 35 puntos por dólar), así que
             no importa qué plataforma uses para apoyar el canal, el chat gana parejo:
           </p>
-          <div className="overflow-x-auto mt-3">
-            <table className="text-sm border-separate border-spacing-y-1">
-              <thead>
-                <tr className="text-zinc-500 text-xs uppercase tracking-wider">
-                  <th className="text-left pr-4 py-1">Moneda</th>
-                  <th className="text-left pr-4 py-1">Puntos por 1</th>
-                  <th className="text-left py-1">Cuántos hacen 1 punto</th>
-                </tr>
-              </thead>
-              <tbody className="text-zinc-300">
-                <tr>
-                  <td className="pr-4 py-0.5">Bits (Twitch)</td>
-                  <td className="pr-4 py-0.5 text-amber-400 font-mono">0.58 pts</td>
-                  <td className="py-0.5 font-mono">~1.72 bits</td>
-                </tr>
-                <tr>
-                  <td className="pr-4 py-0.5">Kicks (Kick)</td>
-                  <td className="pr-4 py-0.5 text-amber-400 font-mono">0.37 pts</td>
-                  <td className="py-0.5 font-mono">~2.70 Kicks</td>
-                </tr>
-                <tr>
-                  <td className="pr-4 py-0.5">Diamantes (TikTok)</td>
-                  <td className="pr-4 py-0.5 text-amber-400 font-mono">0.88 pts</td>
-                  <td className="py-0.5 font-mono">~1.14 diamantes</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-zinc-500 text-xs mt-2">
-            "Diamantes" es lo que recibe el streamer por un regalo de TikTok, no las monedas que paga quien lo
-            manda (TikTok se queda con aprox. la mitad en el camino).
-          </p>
+          <ul className="text-zinc-400 text-sm mt-2 space-y-0.5 list-disc list-inside">
+            <li>Bits (Twitch): ~0.58 puntos por bit</li>
+            <li>Kicks (Kick): ~0.37 puntos por Kick</li>
+            <li>Regalos de TikTok: ~0.88 puntos por diamante que recibe el streamer</li>
+          </ul>
         </div>
       </div>
 
