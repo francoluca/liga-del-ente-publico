@@ -3,21 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { killers, survivors, getAllPerks, EMPTY_PERK_LABEL } from '@/lib/data/characters';
-import {
-  IconPresence,
-  IconDonation,
-  IconStar,
-  IconSwords,
-  IconMask,
-  IconBomb,
-  IconDice,
-  IconZap,
-  IconShield,
-  IconCoin,
-  IconHandshake,
-  IconLink,
-  IconChat,
-} from '@/components/CommandIcons';
 
 function NameGrid({ names, prefix, onCopy }: { names: string[]; prefix: string; onCopy: (command: string) => void }) {
   const [query, setQueryLocal] = useState('');
@@ -88,9 +73,7 @@ export default function ComandosPage() {
         <h2 className="text-sm font-bold uppercase tracking-wide text-lime-400 mb-3">Cómo se ganan los puntos</h2>
 
         <div className="mb-4">
-          <span className="text-amber-400 font-semibold text-sm inline-flex items-center gap-1.5">
-            <IconPresence className="w-4 h-4" /> Presencia activa
-          </span>
+          <span className="text-amber-400 font-semibold text-sm">Presencia activa</span>
           <p className="text-zinc-400 text-sm mt-1">
             No hace falta ningún comando: por estar activo en el chat (mandar cualquier mensaje) se ganan +5 puntos
             gratis cada 10 minutos.
@@ -98,9 +81,7 @@ export default function ComandosPage() {
         </div>
 
         <div>
-          <span className="text-amber-400 font-semibold text-sm inline-flex items-center gap-1.5">
-            <IconDonation className="w-4 h-4" /> Donaciones reales
-          </span>
+          <span className="text-amber-400 font-semibold text-sm">Donaciones reales</span>
           <p className="text-zinc-400 text-sm mt-1">
             Los bits de Twitch, los Kicks de Kick y los regalos de TikTok se convierten en puntos automáticamente
             apenas se registra la donación — no hace falta ningún comando. La conversión está calibrada para que
@@ -120,9 +101,7 @@ export default function ComandosPage() {
           <h2 className="text-sm font-bold uppercase tracking-wide text-sky-400 mb-3">Durante las partidas de la Liga</h2>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconStar className="w-4 h-4 shrink-0" /> !favorito &lt;nombre del personaje&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!favorito &lt;nombre del personaje&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Vota qué personaje quieres que salga sorteado a jugar la próxima ronda. Cada voto suma peso al
               sorteo de ese personaje (hasta triplicar sus chances si muchos chatters votan lo mismo), pero no lo
@@ -136,9 +115,7 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconZap className="w-4 h-4 shrink-0" /> !perk &lt;nombre de la perk&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!perk &lt;nombre de la perk&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Igual que <code className="text-amber-400">!favorito</code>, pero para votar qué perk lleva el
               personaje ya sorteado (o dejarle un slot vacío con &quot;vacio&quot;). Como hay muchas más perks que
@@ -147,9 +124,7 @@ export default function ComandosPage() {
           </div>
 
           <div>
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4 shrink-0" /> !prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!prediccion &lt;killer|survivor&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Apuesta entre 5 y 100 puntos a cómo le va a ir al personaje que acaba de salir sorteado: victoria,
               empate o derrota. La apuesta se abre sola apenas sale el personaje y dura 5 minutos. Si el resultado
@@ -173,9 +148,7 @@ export default function ComandosPage() {
           </p>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4 shrink-0" /> !prediccionduelo &lt;personaje&gt; &lt;monto&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!prediccionduelo &lt;personaje&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Apuesta entre 5 y 100 puntos a quién se queda con un cruce completo (semifinal o final), que se juega
               a mejor de 2 partidas. El ganador del cruce no es simplemente quien gane más partidas sueltas, sino
@@ -190,9 +163,7 @@ export default function ComandosPage() {
           </div>
 
           <div>
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4 shrink-0" /> !prediccionpartida &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!prediccionpartida &lt;personaje&gt; &lt;win|draw|loss&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Es la versión playoff de <code className="text-amber-400">!prediccion</code>: apuesta al resultado
               (victoria, empate o derrota) de una sola partida puntual dentro de un cruce, no del cruce entero.
@@ -213,9 +184,7 @@ export default function ComandosPage() {
           </p>
 
           <div>
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4 shrink-0" /> !prediccion &lt;win|draw|loss&gt; &lt;monto&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!prediccion &lt;win|draw|loss&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Apuesta entre 5 y 100 puntos a cómo le va a ir en esa partida suelta: victoria, empate (solo si es de
               killer) o derrota. No hace falta indicar killer o survivor — ya lo fija la transmisión al abrir la
@@ -236,18 +205,14 @@ export default function ComandosPage() {
           <h2 className="text-sm font-bold uppercase tracking-wide text-fuchsia-400 mb-3">En cualquier momento (chat general)</h2>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4 shrink-0" /> !puntos
-            </code>
+            <code className="text-amber-400 font-semibold">!puntos</code>
             <p className="text-zinc-400 text-sm mt-1">
               Responde en el chat con tu balance actual de puntos.
             </p>
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconSwords className="w-4 h-4 shrink-0" /> !duelo &lt;usuario&gt; &lt;monto&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!duelo &lt;usuario&gt; &lt;monto&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Desafía a otro chatter a apostar entre 5 y 100 puntos, cara a cara. Esa persona tiene 2 minutos para
               responder con <code className="text-amber-400">!aceptar</code>; si no responde, el desafío expira y
@@ -258,9 +223,7 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconHandshake className="w-4 h-4 shrink-0" /> !aceptar
-            </code>
+            <code className="text-amber-400 font-semibold">!aceptar</code>
             <p className="text-zinc-400 text-sm mt-1">
               Acepta el duelo pendiente que alguien te haya iniciado. Al aceptar se resuelve al instante: quien
               gana se lleva las dos apuestas juntas.
@@ -268,9 +231,7 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconMask className="w-4 h-4 shrink-0" /> !robar &lt;usuario&gt;
-            </code>
+            <code className="text-amber-400 font-semibold">!robar &lt;usuario&gt;</code>
             <p className="text-zinc-400 text-sm mt-1">
               Intenta robarle puntos a otro chatter que tenga al menos 50 puntos de balance. Usa la misma lógica de
               probabilidad que el duelo (entre 15% y 85%, según el patrimonio de cada uno). Si sale bien, se roba
@@ -287,9 +248,7 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconBomb className="w-4 h-4 shrink-0" /> !bomba
-            </code>
+            <code className="text-amber-400 font-semibold">!bomba</code>
             <p className="text-zinc-400 text-sm mt-1">
               Arranca una bomba que empieza en las manos de quien la inició y se va pasando sola, al azar, entre
               chatters cada 8 a 20 segundos — nadie la puede pasar a propósito. Explota en un momento oculto de
@@ -301,9 +260,7 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconLink className="w-4 h-4 shrink-0" /> !ligadelente
-            </code>
+            <code className="text-amber-400 font-semibold">!ligadelente</code>
             <p className="text-zinc-400 text-sm mt-1">
               Responde con el link al sitio público de la Liga y a esta misma página de comandos, para compartirla
               con quien la pida en el chat.
@@ -311,26 +268,20 @@ export default function ComandosPage() {
           </div>
 
           <div className="mb-4">
-            <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-              <IconChat className="w-4 h-4 shrink-0" /> !discord
-            </code>
+            <code className="text-amber-400 font-semibold">!discord</code>
             <p className="text-zinc-400 text-sm mt-1">
               Responde con el link de invitación al servidor de Discord del canal.
             </p>
           </div>
 
           <div className="border-t border-zinc-800 pt-5 mt-1">
-            <span className="text-amber-400 font-semibold text-sm inline-flex items-center gap-1.5">
-              <IconCoin className="w-4 h-4" /> Tienda de puntos
-            </span>
+            <span className="text-amber-400 font-semibold text-sm">Tienda de puntos</span>
             <p className="text-zinc-400 text-sm mt-1 mb-4">
               Gastá tus puntos en ventajas para la próxima ruleta de la Liga u otros beneficios.
             </p>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-                <IconDice className="w-4 h-4 shrink-0" /> !reroll personaje
-              </code>
+              <code className="text-amber-400 font-semibold">!reroll personaje</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 150 puntos, vuelve a sortear el personaje que esté en pantalla en ese momento (Liga, playoffs
                 o partida normal, la ruleta que esté activa). Se aplica solo, sin que la transmisión tenga que
@@ -344,9 +295,7 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-                <IconDice className="w-4 h-4 shrink-0" /> !reroll perks
-              </code>
+              <code className="text-amber-400 font-semibold">!reroll perks</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 100 puntos, igual que <code className="text-amber-400">!reroll personaje</code> pero solo
                 redibuja las 4 perks del personaje que está en pantalla, sin tocar el personaje ni la predicción
@@ -356,9 +305,7 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-                <IconZap className="w-4 h-4 shrink-0" /> !potenciar &lt;perk&gt;
-              </code>
+              <code className="text-amber-400 font-semibold">!potenciar &lt;perk&gt;</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 150 puntos, potencia una perk especial por 48 horas, aumentando sus chances de salir sorteada en
                 ese lapso. Las opciones son: <code className="text-amber-400">me da igual</code>,{' '}
@@ -371,9 +318,7 @@ export default function ComandosPage() {
             </div>
 
             <div>
-              <code className="text-amber-400 font-semibold inline-flex items-center gap-1.5">
-                <IconShield className="w-4 h-4 shrink-0" /> !inmunidad
-              </code>
+              <code className="text-amber-400 font-semibold">!inmunidad</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
                 <code className="text-amber-400">!robar</code> en tu contra puede concretarse (aunque el que
@@ -389,30 +334,22 @@ export default function ComandosPage() {
       </div>
 
       <section className="mb-10">
-        <h2 className="text-xl font-bold text-red-500 uppercase tracking-wide mb-3 inline-flex items-center gap-2">
-          <IconSwords className="w-5 h-5" /> Killers
-        </h2>
+        <h2 className="text-xl font-bold text-red-500 uppercase tracking-wide mb-3">Killers</h2>
         <NameGrid names={killerNames} prefix="!favorito" onCopy={copyCommand} />
       </section>
 
       <section className="mb-10">
-        <h2 className="text-xl font-bold text-green-500 uppercase tracking-wide mb-3 inline-flex items-center gap-2">
-          <IconShield className="w-5 h-5" /> Survivors
-        </h2>
+        <h2 className="text-xl font-bold text-green-500 uppercase tracking-wide mb-3">Survivors</h2>
         <NameGrid names={survivorNames} prefix="!favorito" onCopy={copyCommand} />
       </section>
 
       <section className="mb-10">
-        <h2 className="text-xl font-bold text-amber-400 uppercase tracking-wide mb-3 inline-flex items-center gap-2">
-          <IconZap className="w-5 h-5" /> Perks de Killer
-        </h2>
+        <h2 className="text-xl font-bold text-amber-400 uppercase tracking-wide mb-3">Perks de Killer</h2>
         <NameGrid names={killerPerks} prefix="!perk" onCopy={copyCommand} />
       </section>
 
       <section className="mb-10">
-        <h2 className="text-xl font-bold text-amber-400 uppercase tracking-wide mb-3 inline-flex items-center gap-2">
-          <IconZap className="w-5 h-5" /> Perks de Survivor
-        </h2>
+        <h2 className="text-xl font-bold text-amber-400 uppercase tracking-wide mb-3">Perks de Survivor</h2>
         <NameGrid names={survivorPerks} prefix="!perk" onCopy={copyCommand} />
       </section>
 
