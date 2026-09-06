@@ -6,6 +6,7 @@ interface ViewerStatRow {
   balance: number;
   reserved: number;
   net_worth: number;
+  lifetime_points: number;
   platform: string | null;
   avatar_url: string | null;
   resolved_count: number;
@@ -43,6 +44,7 @@ interface ViewerStat {
   balance: number;
   reserved: number;
   netWorth: number;
+  lifetimePoints: number;
   resolvedCount: number;
   wins: number;
   losses: number;
@@ -156,6 +158,13 @@ const STATS_SQL = `
     cp.balance,
     cp.reserved,
     (cp.balance + cp.reserved) AS net_worth,
+    -- "Puntos de por vida": ranking-only score that adds back everything
+    -- ever spent in the points shop (redemptions.cost), so buying a
+    -- reroll/boost/immunity/character choice never costs you rank - only
+    -- gambling losses (predictions, duels, robbery, bombs) still do, since
+    -- those are meant to carry real risk. balance/reserved themselves are
+    -- untouched; this is purely a second, display-only score.
+    (cp.balance + cp.reserved + COALESCE(rds.total_redemption_spend, 0)) AS lifetime_points,
     COALESCE(ps.platform, cp.platform) AS platform,
     cp.avatar_url AS avatar_url,
     COALESCE(ps.resolved_count, 0) AS resolved_count,
@@ -190,7 +199,7 @@ const STATS_SQL = `
   LEFT JOIN bomb_loss bl ON bl.voter_key = cp.voter_key
   LEFT JOIN bomb_survive bsv ON bsv.voter_key = cp.voter_key
   LEFT JOIN redemption_stats rds ON rds.voter_key = cp.voter_key
-  ORDER BY net_worth DESC
+  ORDER BY lifetime_points DESC
 `;
 
 export async function GET() {
@@ -205,6 +214,7 @@ export async function GET() {
       balance: r.balance,
       reserved: r.reserved,
       netWorth: r.net_worth,
+      lifetimePoints: r.lifetime_points,
       resolvedCount: r.resolved_count,
       wins: r.wins,
       losses: r.losses,

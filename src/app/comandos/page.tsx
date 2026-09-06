@@ -222,7 +222,10 @@ export default function ComandosPage() {
           <div className="border-t border-zinc-800 pt-5 mt-1">
             <span className="text-amber-400 font-semibold text-sm">Tienda de puntos</span>
             <p className="text-zinc-400 text-sm mt-1 mb-4">
-              Gastá tus puntos en ventajas para la próxima ruleta de la Liga u otros beneficios.
+              Gastá tus puntos en ventajas para la próxima ruleta de la Liga u otros beneficios. Canjear no te hace
+              bajar en el{' '}
+              <Link href="/viewers" className="text-amber-400 hover:text-amber-300 underline">ranking del chat</Link>:
+              lo que gastás en la tienda cuenta igual para tus puntos de por vida.
             </p>
 
             <div className="mb-4">

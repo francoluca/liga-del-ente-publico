@@ -10,6 +10,7 @@ interface ViewerStat {
   balance: number;
   reserved: number;
   netWorth: number;
+  lifetimePoints: number;
   resolvedCount: number;
   wins: number;
   losses: number;
@@ -235,14 +236,17 @@ export default function ViewersPage() {
 
           {tab === 'general' && (
             <div className="overflow-x-auto">
-              <table className="w-full sm:min-w-[520px] table-fixed text-sm border-separate border-spacing-y-1.5">
+              <table className="w-full sm:min-w-[620px] table-fixed text-sm border-separate border-spacing-y-1.5">
                 <thead>
                   <tr className="text-zinc-500 text-xs uppercase tracking-wider">
                     <th className="text-left px-3 py-1 w-8 sm:w-10">#</th>
                     <th className="text-left px-3 py-1">Viewer</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Disponible</th>
                     <th className="hidden sm:table-cell text-center px-2 py-1 w-24">En apuesta</th>
-                    <th className="text-center px-3 py-1 w-24">Total</th>
+                    <th className="hidden sm:table-cell text-center px-2 py-1 w-24">Total</th>
+                    <th className="text-center px-3 py-1 w-24" title="Balance + apostado + todo lo gastado en la tienda de puntos - canjear no te hace bajar de puesto.">
+                      De por vida
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -256,7 +260,8 @@ export default function ViewersPage() {
                       </td>
                       <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.balance}</td>
                       <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.reserved}</td>
-                      <td className="text-center px-3 py-2 font-mono text-yellow-300 font-black rounded-r-lg">{v.netWorth}</td>
+                      <td className="hidden sm:table-cell text-center px-2 py-2 font-mono text-zinc-400">{v.netWorth}</td>
+                      <td className="text-center px-3 py-2 font-mono text-yellow-300 font-black rounded-r-lg">{v.lifetimePoints}</td>
                     </tr>
                   ))}
                 </tbody>
