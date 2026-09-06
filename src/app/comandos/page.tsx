@@ -250,6 +250,23 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!killer &lt;personaje&gt;</code> /{' '}
+              <code className="text-amber-400 font-semibold">!survi &lt;personaje&gt;</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 400 puntos, garantiza que el próximo personaje de una partida normal (killer o survivor, según
+                el comando) sea exactamente el que elijas, en vez de salir al azar — a diferencia de{' '}
+                <code className="text-amber-400">!reroll personaje</code>, que solo vuelve a tirar el dado. Solo
+                aplica a la ruleta de partida normal, no a la de la Liga ni a los playoffs. Se aplica solo, igual
+                que el reroll, apenas la transmisión tenga una ruleta de ese tipo en pantalla; comparte el mismo
+                cooldown de 10 minutos que los rerolls.
+              </p>
+              <p className="text-zinc-500 text-xs mt-1">
+                Ejemplo: <code className="text-amber-400">!killer huntress</code>. Hacé click en cualquier nombre
+                de las listas de más abajo para copiar el comando listo para pegar en el chat.
+              </p>
+            </div>
+
+            <div className="mb-4">
               <code className="text-amber-400 font-semibold">!potenciar &lt;perk&gt;</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 150 puntos, potencia una perk especial por 48 horas, aumentando sus chances de salir sorteada en
@@ -286,6 +303,16 @@ export default function ComandosPage() {
       <section className="mb-10">
         <h2 className="text-xl font-bold text-green-500 uppercase tracking-wide mb-3">Survivors</h2>
         <NameGrid names={survivorNames} prefix="!favorito" onCopy={copyCommand} />
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-xl font-bold text-red-500 uppercase tracking-wide mb-3">Elegir Killer (partida normal)</h2>
+        <NameGrid names={killerNames} prefix="!killer" onCopy={copyCommand} />
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-xl font-bold text-green-500 uppercase tracking-wide mb-3">Elegir Survivor (partida normal)</h2>
+        <NameGrid names={survivorNames} prefix="!survi" onCopy={copyCommand} />
       </section>
 
       <section className="mb-10">
