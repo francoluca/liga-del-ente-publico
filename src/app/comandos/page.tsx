@@ -271,8 +271,9 @@ export default function ComandosPage() {
               <p className="text-zinc-400 text-sm mt-1">
                 Por 150 puntos, potencia una perk especial por 48 horas, aumentando sus chances de salir sorteada en
                 ese lapso. Las opciones son: <code className="text-amber-400">me da igual</code>,{' '}
-                <code className="text-amber-400">objeto de obsesion</code> y{' '}
-                <code className="text-amber-400">vacio</code>.
+                <code className="text-amber-400">objeto de obsesion</code>,{' '}
+                <code className="text-amber-400">vacio</code> y{' '}
+                <code className="text-amber-400">comodin</code>.
               </p>
               <p className="text-zinc-500 text-xs mt-1">
                 Ejemplo: <code className="text-amber-400">!potenciar objeto de obsesion</code>
