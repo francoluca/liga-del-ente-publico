@@ -199,6 +199,11 @@ const STATS_SQL = `
   LEFT JOIN bomb_loss bl ON bl.voter_key = cp.voter_key
   LEFT JOIN bomb_survive bsv ON bsv.voter_key = cp.voter_key
   LEFT JOIN redemption_stats rds ON rds.voter_key = cp.voter_key
+  -- Streamer's own chat accounts never earn points (see NO_EARN_USERNAMES in
+  -- the admin repo's src/lib/db/points.ts), but old rows can still linger in
+  -- chatter_points from before that gate existed - excluded here too so they
+  -- never show up in the public ranking or count toward its totals.
+  WHERE LOWER(TRIM(SUBSTR(cp.voter_key, INSTR(cp.voter_key, ':') + 1), '@')) NOT IN ('franluca', 'franluca_', 'franlucatv')
   ORDER BY lifetime_points DESC
 `;
 
