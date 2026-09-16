@@ -169,20 +169,6 @@ export default function ComandosPage() {
             </p>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold">!reroll personaje</code>
-              <p className="text-zinc-400 text-sm mt-1">
-                Por 150 puntos, vuelve a sortear el personaje que esté en pantalla en ese momento (Liga, playoffs
-                o partida normal, la ruleta que esté activa). Se aplica solo, sin que la transmisión tenga que
-                hacer nada, apenas unos segundos después de la compra — si ya había una predicción abierta para
-                ese personaje, se pierde junto con el sorteo. Si nadie está en medio de una ronda (el resultado
-                de la anterior ya se cargó y todavía no giró la próxima), queda en espera y se aplica apenas
-                arranca ese siguiente giro. En cualquier modalidad (Liga, playoffs o partida normal) hay 1 minuto
-                de margen desde que se revela la 4ª perk para usar el reroll — pasado ese minuto ya no se acepta,
-                aunque el personaje siga en pantalla. Hay que esperar 10 minutos entre compras de reroll.
-              </p>
-            </div>
-
-            <div className="mb-4">
               <code className="text-amber-400 font-semibold">!reroll perks</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 100 puntos, igual que <code className="text-amber-400">!reroll personaje</code> pero solo
@@ -193,18 +179,29 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold">!killer &lt;personaje&gt;</code> /{' '}
-              <code className="text-amber-400 font-semibold">!survi &lt;personaje&gt;</code>
+              <code className="text-amber-400 font-semibold">!inmunidad</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Por 400 puntos, garantiza que el próximo personaje de una partida normal (killer o survivor, según
-                el comando) sea exactamente el que elijas, en vez de salir al azar — a diferencia de{' '}
-                <code className="text-amber-400">!reroll personaje</code>, que solo vuelve a tirar el dado. Solo
-                aplica a la ruleta de partida normal, no a la de la Liga ni a los playoffs. Se aplica solo, igual
-                que el reroll, apenas la transmisión tenga una ruleta de ese tipo en pantalla; comparte el mismo
-                cooldown de 10 minutos que los rerolls.
+                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
+                <code className="text-amber-400">!robar</code> en tu contra puede concretarse (aunque el que
+                intenta robar puede igual perder puntos por su cuenta, con la misma probabilidad de siempre — la
+                inmunidad no te vuelve un blanco más riesgoso para nadie), y si te toca sostener la{' '}
+                <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
+                48 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
+                menos 24 horas sin inmunidad entre una compra y la siguiente.
               </p>
-              <p className="text-zinc-500 text-xs mt-1">
-                Ejemplo: <code className="text-amber-400">!killer huntress</code>.
+            </div>
+
+            <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!reroll personaje</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 150 puntos, vuelve a sortear el personaje que esté en pantalla en ese momento (Liga, playoffs
+                o partida normal, la ruleta que esté activa). Se aplica solo, sin que la transmisión tenga que
+                hacer nada, apenas unos segundos después de la compra — si ya había una predicción abierta para
+                ese personaje, se pierde junto con el sorteo. Si nadie está en medio de una ronda (el resultado
+                de la anterior ya se cargó y todavía no giró la próxima), queda en espera y se aplica apenas
+                arranca ese siguiente giro. En cualquier modalidad (Liga, playoffs o partida normal) hay 1 minuto
+                de margen desde que se revela la 4ª perk para usar el reroll — pasado ese minuto ya no se acepta,
+                aunque el personaje siga en pantalla. Hay que esperar 10 minutos entre compras de reroll.
               </p>
             </div>
 
@@ -223,19 +220,6 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
-              <code className="text-amber-400 font-semibold">!inmunidad</code>
-              <p className="text-zinc-400 text-sm mt-1">
-                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
-                <code className="text-amber-400">!robar</code> en tu contra puede concretarse (aunque el que
-                intenta robar puede igual perder puntos por su cuenta, con la misma probabilidad de siempre — la
-                inmunidad no te vuelve un blanco más riesgoso para nadie), y si te toca sostener la{' '}
-                <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
-                48 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
-                menos 24 horas sin inmunidad entre una compra y la siguiente.
-              </p>
-            </div>
-
-            <div>
               <code className="text-amber-400 font-semibold">!mando</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 300 puntos, obliga al streamer a jugar la próxima partida con mando en vez de mouse y teclado.
@@ -243,6 +227,22 @@ export default function ComandosPage() {
                 un reroll o la inmunidad, aunque no llega al precio de{' '}
                 <code className="text-amber-400">!killer</code>/<code className="text-amber-400">!survi</code>.
                 Hay que esperar 1 hora desde la última compra para volver a comprarlo.
+              </p>
+            </div>
+
+            <div>
+              <code className="text-amber-400 font-semibold">!killer &lt;personaje&gt;</code> /{' '}
+              <code className="text-amber-400 font-semibold">!survi &lt;personaje&gt;</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 400 puntos, garantiza que el próximo personaje de una partida normal (killer o survivor, según
+                el comando) sea exactamente el que elijas, en vez de salir al azar — a diferencia de{' '}
+                <code className="text-amber-400">!reroll personaje</code>, que solo vuelve a tirar el dado. Solo
+                aplica a la ruleta de partida normal, no a la de la Liga ni a los playoffs. Se aplica solo, igual
+                que el reroll, apenas la transmisión tenga una ruleta de ese tipo en pantalla; comparte el mismo
+                cooldown de 10 minutos que los rerolls.
+              </p>
+              <p className="text-zinc-500 text-xs mt-1">
+                Ejemplo: <code className="text-amber-400">!killer huntress</code>.
               </p>
             </div>
           </div>
