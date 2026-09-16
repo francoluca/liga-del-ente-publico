@@ -222,7 +222,7 @@ export default function ComandosPage() {
               </p>
             </div>
 
-            <div>
+            <div className="mb-4">
               <code className="text-amber-400 font-semibold">!inmunidad</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
@@ -232,6 +232,17 @@ export default function ComandosPage() {
                 <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
                 48 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
                 menos 24 horas sin inmunidad entre una compra y la siguiente.
+              </p>
+            </div>
+
+            <div>
+              <code className="text-amber-400 font-semibold">!mando</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 300 puntos, obliga al streamer a jugar la próxima partida con mando en vez de mouse y teclado.
+                No es una ventaja para quien canjea, es un hándicap real para el streamer — por eso cuesta más que
+                un reroll o la inmunidad, aunque no llega al precio de{' '}
+                <code className="text-amber-400">!killer</code>/<code className="text-amber-400">!survi</code>.
+                Hay que esperar 1 hora desde la última compra para volver a comprarlo.
               </p>
             </div>
           </div>
