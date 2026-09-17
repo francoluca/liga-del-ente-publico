@@ -220,6 +220,15 @@ export default function ComandosPage() {
             </div>
 
             <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!partidaextra</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 250 puntos, agrega una partida más al final del stream. El cooldown acá no es individual: apenas
+                alguien la canjea, queda bloqueada para todo el chat durante 24 horas, así que no importa cuántos
+                puntos tengas, solo se puede comprar una por día entre todos.
+              </p>
+            </div>
+
+            <div className="mb-4">
               <code className="text-amber-400 font-semibold">!mando</code>
               <p className="text-zinc-400 text-sm mt-1">
                 Por 300 puntos, obliga al streamer a jugar la próxima partida con mando en vez de mouse y teclado.
