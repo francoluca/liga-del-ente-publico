@@ -181,12 +181,12 @@ export default function ComandosPage() {
             <div className="mb-4">
               <code className="text-amber-400 font-semibold">!inmunidad</code>
               <p className="text-zinc-400 text-sm mt-1">
-                Por 120 puntos, comprá 24 horas de inmunidad: durante ese tiempo, ningún{' '}
+                Por 120 puntos, comprá 48 horas de inmunidad: durante ese tiempo, ningún{' '}
                 <code className="text-amber-400">!robar</code> en tu contra puede concretarse (aunque el que
                 intenta robar puede igual perder puntos por su cuenta, con la misma probabilidad de siempre — la
                 inmunidad no te vuelve un blanco más riesgoso para nadie), y si te toca sostener la{' '}
                 <code className="text-amber-400">!bomba</code> cuando explota, no perdés puntos. Hay que esperar
-                48 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
+                72 horas desde la última compra para volver a comprarla, así que siempre queda una ventana de al
                 menos 24 horas sin inmunidad entre una compra y la siguiente.
               </p>
             </div>
