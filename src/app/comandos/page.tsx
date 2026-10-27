@@ -239,6 +239,19 @@ export default function ComandosPage() {
               </p>
             </div>
 
+            <div className="mb-4">
+              <code className="text-amber-400 font-semibold">!build &lt;perks&gt;</code>
+              <p className="text-zinc-400 text-sm mt-1">
+                Por 300 puntos, elige la build (las perks) con la que el streamer juega la próxima partida. Se
+                escribe libre, hasta 150 caracteres. Igual que <code className="text-amber-400">!partidaextra</code>,
+                el cooldown es para todo el chat: apenas alguien la canjea, nadie más puede elegir otra build durante
+                30 minutos, así no se pisan antes de que se juegue la partida.
+              </p>
+              <p className="text-zinc-500 text-xs mt-1">
+                Ejemplo: <code className="text-amber-400">!build Sprint Burst, Adrenaline, Dead Hard, Decisive Strike</code>
+              </p>
+            </div>
+
             <div>
               <code className="text-amber-400 font-semibold">!killer &lt;personaje&gt;</code> /{' '}
               <code className="text-amber-400 font-semibold">!survi &lt;personaje&gt;</code>
