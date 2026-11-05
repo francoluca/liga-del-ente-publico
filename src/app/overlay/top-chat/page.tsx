@@ -12,8 +12,8 @@ import PlatformIcon from '@/components/PlatformIcon';
  * Suggested OBS source size: 600 x 720.
  * Query params:
  *   ?limit=15          how many viewers (1-50, default 15)
- *   ?titulo=...        title (default "Los fieles del Ente")
- *   ?subtitulo=...     line under the title (default "Top N del chat · ¡Gracias por bancar!")
+ *   ?titulo=...        title (default "Siempre presentes")
+ *   ?subtitulo=...     line under the title (default "Top N del chat")
  *   ?visibles=7        rows visible at once (3-15, default 7)
  *   ?velocidad=2.5     seconds per row while scrolling (default 2.5)
  *   ?puntos=0          hide the points column
@@ -55,7 +55,7 @@ function readParams(): Params {
   };
   return {
     limit: Math.round(num('limit', 15, 1, 50)),
-    title: p.get('titulo')?.trim() || 'Los fieles del Ente',
+    title: p.get('titulo')?.trim() || 'Siempre presentes',
     subtitle: p.get('subtitulo')?.trim() || null,
     visible: Math.round(num('visibles', 7, 3, 15)),
     secPerRow: num('velocidad', 2.5, 0.5, 20),
@@ -136,7 +136,7 @@ export default function TopChatOverlay() {
   const durationS = rows.length * params.secPerRow;
   // Changes when the ranking changes, so the animation restarts from #1 cleanly.
   const listKey = rows.map((r) => r.voterKey).join('|');
-  const subtitle = params.subtitle ?? `Top ${rows.length} del chat · ¡Gracias por bancar!`;
+  const subtitle = params.subtitle ?? `Top ${rows.length} del chat`;
   const fade = 'linear-gradient(to bottom, transparent 0, #000 10px, #000 calc(100% - 28px), transparent 100%)';
 
   return (
