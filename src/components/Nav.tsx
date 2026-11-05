@@ -17,6 +17,9 @@ export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // OBS browser-source overlays render bare: no site chrome on top.
+  if (pathname.startsWith('/overlay')) return null;
+
   return (
     <header className="sticky top-0 z-50 bg-zinc-950/95 backdrop-blur border-b border-zinc-800">
       <nav className="max-w-6xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
