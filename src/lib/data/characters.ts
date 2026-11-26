@@ -39,11 +39,11 @@ export const SEASON_DISTRIBUTIONS: Record<CharacterType, Record<Division, {
     Iridiscente: { total: 10, ascend: 0, descend: 4, playOff: 4 },
     Oro: { total: 10, ascend: 4, descend: 4, playOff: 0 },
     Plata: { total: 10, ascend: 4, descend: 3, playOff: 0 },
-    Bronce: { total: 7, ascend: 3, descend: 3, playOff: 0 },
+    Bronce: { total: 8, ascend: 3, descend: 3, playOff: 0 },
     Ceniza: { total: 7, ascend: 3, descend: 0, playOff: 0 },
   },
   survivor: {
-    Iridiscente: { total: 10, ascend: 0, descend: 4, playOff: 4 },
+    Iridiscente: { total: 11, ascend: 0, descend: 4, playOff: 4 },
     Oro: { total: 11, ascend: 4, descend: 4, playOff: 0 },
     Plata: { total: 11, ascend: 4, descend: 4, playOff: 0 },
     Bronce: { total: 11, ascend: 4, descend: 4, playOff: 0 },
@@ -52,8 +52,8 @@ export const SEASON_DISTRIBUTIONS: Record<CharacterType, Record<Division, {
 };
 
 export const DIVISION_LIMITS: Record<CharacterType, Record<Division, number>> = {
-  killer: { Iridiscente: 10, Oro: 10, Plata: 10, Bronce: 7, Ceniza: 7 },
-  survivor: { Iridiscente: 10, Oro: 11, Plata: 11, Bronce: 11, Ceniza: 11 }
+  killer: { Iridiscente: 10, Oro: 10, Plata: 10, Bronce: 8, Ceniza: 7 },
+  survivor: { Iridiscente: 11, Oro: 11, Plata: 11, Bronce: 11, Ceniza: 11 }
 };
 
 export const killers: Omit<CharacterData, 'type' | 'division'>[] = [
@@ -101,6 +101,7 @@ export const killers: Omit<CharacterData, 'type' | 'division'>[] = [
   { id: 42, name: 'El Trampero', image: 'img/trapper.webp', expertPerks: ['agitacion', 'fuerza_brutal', 'presencia_perturbadora'], metaBuild: ['intervencion_corrupta', 'dolor_resonante', 'retrocede_el_tiempo', 'enfurecimiento'] },
   { id: 43, name: 'Jason', image: 'img/jason.webp', expertPerks: ['sombra_silenciosa', 'matanza', 'terror_hasta_la_muerte'], metaBuild: ['intervencion_corrupta', 'dolor_resonante', 'retrocede_el_tiempo', 'enfurecimiento'] },
   { id: 44, name: 'El Juicio', image: 'img/juicio.webp', expertPerks: ['testigo_celestial', 'bajo_el_yugo', 'devastacion'], metaBuild: ['nadie_escapa_de_la_muerte', 'la_emocion_de_la_caza', 'apreton_de_hierro', 'espias_de_las_sombras'] },
+  { id: 45, name: 'Art', image: 'img/art.webp', expertPerks: ['nada_de_jueguitos', 'hazmerreir', 'racha_asesina'], metaBuild: ['intervencion_corrupta', 'dolor_resonante', 'retrocede_el_tiempo', 'enfurecimiento'] },
 ];
 
 export const survivors: Omit<CharacterData, 'type' | 'division'>[] = [
@@ -158,6 +159,7 @@ export const survivors: Omit<CharacterData, 'type' | 'division'>[] = [
   { id: 152, name: 'Kwon Tae-Young', image: 'img/kwon.png', expertPerks: ['estado_de_flujo', 'un_lugar_para_nosotros', 'cinco_movimientos_adelante'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
   { id: 153, name: 'Shane Wiigwaas', image: 'img/shane.webp', expertPerks: ['maxima_velocidad', 'interrogatorio', 'echar_una_mano'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
   { id: 154, name: 'Aurora Stardotter', image: 'img/aurora.webp', expertPerks: ['cosechas_lo_que_siembras', 'grito_de_salvacion', 'determinacion'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
+  { id: 155, name: 'Sienna Shaw', image: 'img/sienna.webp', expertPerks: ['el_mejor_regalo_del_mundo', 'furia_de_la_valquiria', 'trauma_compartido'], metaBuild: ['agilidad', 'elegancia', 'fuerza_interior', 'adrenalina'] },
 ];
 
 // Vote/draw target representing "leave this slot empty" - not a real perk
